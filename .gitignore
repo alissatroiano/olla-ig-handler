@@ -1,3 +1,5 @@
 env.py
 mdb/
 assets/js/.env
+my-app/public/env.js
+my-app/.env
