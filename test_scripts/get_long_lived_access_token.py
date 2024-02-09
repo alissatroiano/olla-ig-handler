@@ -1,4 +1,4 @@
-from dictionary import getCreds, make_api_call
+from scripts.dictionary import getCreds, make_api_call
 
 def get_long_lived_access_token(params):
     endpoint_params = {

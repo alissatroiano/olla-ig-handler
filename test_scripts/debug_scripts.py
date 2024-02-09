@@ -1,4 +1,4 @@
-from dictionary import getCreds, make_api_call
+from scripts.dictionary import getCreds, make_api_call
 import datetime
 
 def debug_access_token(params):
