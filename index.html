@@ -12,7 +12,13 @@
         </div>
         <div class="login-container">
             <p>Experience seamless onboarding with Olla AI's innovative solutions.</p>
-            <button id="get-started-button" class="login-button" onclick="initializeFacebookSDK()">Get Started</button>
+            <fb:login-button 
+            scope="public_profile"
+            onlogin="checkLoginState();"
+            id="get-started-button" 
+            class="login-button">
+            Get Started
+            </fb:login-button>
         </div>
         <div class="footer">
             <p>Learn more about us at <a href="https://www.olla.ai">www.olla.ai</a></p>
@@ -21,40 +27,50 @@
 
 <script>
     function initializeFacebookSDK() {
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) { return; }
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk')
-        );
+        // Initialize Facebook SDK when the button is clicked
         window.fbAsyncInit = function () {
-
             FB.init({
                 appId: '',
                 xfbml: true,
                 version: 'v19.0'
             });
 
+            // Trigger Facebook login when the SDK is initialized
             FB.login(function (response) {
                 if (response.authResponse) {
                     console.log('Welcome!  Fetching your information.... ');
+                    // Example: Fetch user's name and email
                     FB.api('/me', { fields: 'name, email' }, function (response) {
-                        document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". i see your email address is " + response.email
+                        document.getElementById("profile").innerHTML = "Good to see you, " + response.name + ". I see your email address is " + response.email;
                     });
                 } else {
-
                     console.log('User cancelled login or did not fully authorize.');
                 }
             });
         };
+
+        // Load Facebook SDK script
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     }
 
-    document.getElementById("get-started-button").addEventListener("click", function () {
-        initializeFacebookSDK();
-    });
+    // Add event listener to the button to initialize Facebook SDK
+    document.getElementById("get-started-button").addEventListener("click", initializeFacebookSDK);
 
+</script>
+
+<script>
+
+function checkLoginState() {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+}
 </script>
 
 </body>

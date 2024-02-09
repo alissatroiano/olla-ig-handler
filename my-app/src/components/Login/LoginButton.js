@@ -11,7 +11,7 @@ class LoginButton extends React.Component {
   initializeFacebookSDK() {
     window.fbAsyncInit = function () {
       FB.init({
-        appId: "",
+        appId: '', 
         xfbml: true,
         version: "v19.0",
       });
@@ -21,19 +21,6 @@ class LoginButton extends React.Component {
           this.statusChangeCallback(response); // Call statusChangeCallback function
         }.bind(this)
       );
-
-      FB.login(function (response) {
-        if (response.authResponse) {
-          console.log("Welcome! Fetching your information....");
-          FB.api("/me", { fields: "name, email" }, function (response) {
-            // Update UI with user information
-            document.getElementById("profile").innerHTML =
-              "OLLA, " + response.name + "! It's good to see you :)";
-          });
-        } else {
-          console.log("User cancelled login or did not fully authorize.");
-        }
-      });
     }.bind(this);
 
     // Load Facebook SDK script
@@ -50,7 +37,7 @@ class LoginButton extends React.Component {
     })(document, "script", "facebook-jssdk");
   }
 
-  statusChangeCallback(response) {
+  statusChangeCallback = (response) => {
     console.log("Facebook login status:", response.status);
     if (response.status === "connected") {
       // User is logged into Facebook and your app
@@ -66,11 +53,35 @@ class LoginButton extends React.Component {
     }
   }
 
+  handleLoginButtonClick = () => {
+    // Trigger Facebook login when button is clicked
+    FB.login(function (response) {
+      if (response.authResponse) {
+        console.log("Welcome! Fetching your information....");
+        FB.api("/me", { fields: "name, email" }, function (response) {
+          // Update UI with user information
+          document.getElementById("profile").innerHTML =
+            "OLLA, " + response.name + "! It's good to see you :)";
+        });
+      } else {
+        console.log("User cancelled login or did not fully authorize.");
+      }
+    });
+  };
+
+checkLoginState  = () => {
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  })
+};
+
   render() {
     return (
-      <button id="get-started-button" className="login-button">
-        Connect with Facebook
-      </button>
+      
+    <fb:login-button 
+      scope="public_profile,email"
+      onlogin="checkLoginState();">
+    </fb:login-button>
     );
   }
 }
