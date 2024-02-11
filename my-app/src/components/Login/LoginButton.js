@@ -1,89 +1,32 @@
-/* global FB */
+import React, { useState } from "react";
+import { render } from "react-dom";
+import FacebookLogin from 'react-facebook-login'
 
-import React from "react";
 
-class LoginButton extends React.Component {
-  componentDidMount() {
-    // Initialize Facebook SDK when component mounts
-    this.initializeFacebookSDK();
-  }
-
-  initializeFacebookSDK() {
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: '', 
-        xfbml: true,
-        version: "v19.0",
-      });
-
-      FB.getLoginStatus(
-        function (response) {
-          this.statusChangeCallback(response); // Call statusChangeCallback function
-        }.bind(this)
-      );
-    }.bind(this);
-
-    // Load Facebook SDK script
-    (function (d, s, id) {
-      var js,
-        fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {
-        return;
-      }
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, "script", "facebook-jssdk");
-  }
-
-  statusChangeCallback = (response) => {
-    console.log("Facebook login status:", response.status);
-    if (response.status === "connected") {
-      // User is logged into Facebook and your app
-      console.log("User is logged into Facebook and your app.");
-    } else if (response.status === "not_authorized") {
-      // User is logged into Facebook but has not authorized your app
-      console.log(
-        "User is logged into Facebook but has not authorized your app."
-      );
-    } else {
-      // User is not logged into Facebook
-      console.log("User is not logged into Facebook.");
-    }
-  }
-
-  handleLoginButtonClick = () => {
-    // Trigger Facebook login when button is clicked
-    FB.login(function (response) {
-      if (response.authResponse) {
-        console.log("Welcome! Fetching your information....");
-        FB.api("/me", { fields: "name, email" }, function (response) {
-          // Update UI with user information
-          document.getElementById("profile").innerHTML =
-            "OLLA, " + response.name + "! It's good to see you :)";
-        });
-      } else {
-        console.log("User cancelled login or did not fully authorize.");
-      }
-    });
+const LoginButton = () => {
+  const componentClicked = data => {
+    console.log("data", data);
   };
 
-checkLoginState  = () => {
-  FB.getLoginStatus(function(response) {
-    statusChangeCallback(response);
-  })
-};
-
-  render() {
-    return (
-      
-    <fb:login-button 
-      scope="public_profile,email"
-      onlogin="checkLoginState();">
-    </fb:login-button>
-    );
+const responseFacebook = response => {
+    console.log(response);
   }
+
+  return (
+    <div>
+          Connect with Facebook
+          <br />
+          <FacebookLogin
+            appId=""
+            autoLoad={true}
+            fields="name,public_profile"
+            onClick={componentClicked}
+            callback={responseFacebook} 
+          />
+    </div>
+  );
 }
+
+render(<LoginButton />, document.querySelector('#root'));
 
 export default LoginButton;
