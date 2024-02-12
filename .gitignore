@@ -11,3 +11,4 @@ test_scripts/__pycache__
 __pycache__
 ./olla-env
 olla-env
+venv/

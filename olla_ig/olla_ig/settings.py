@@ -35,19 +35,13 @@ INSTALLED_APPS = [
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
+    #allauth backend
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_UNIQUE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
-ACCOUNT_USERNAME_MIN_LENGTH = 4
-# LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
 # LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 WSGI_APPLICATION = 'olla_ig.wsgi.application'

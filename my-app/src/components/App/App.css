@@ -1,5 +1,19 @@
+.App {
+    background: url('olla-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    min-height: 100vh;
+    overflow: none;
+}
+
 .title {
-    font-size: 2rem;
+    font-size: 3rem;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 80px;
+    margin-bottom: 30px;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 700;
+    color: #ff5531;
 }

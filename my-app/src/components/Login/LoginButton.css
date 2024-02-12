@@ -1,0 +1,33 @@
+.welcome-container {
+    padding: 20px;
+}
+
+.loginDetails {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 400;
+    color: #0a0a0a;
+    font-size: 1.25rem;
+    letter-spacing: -1px;
+}
+
+.welcome-container {
+    padding: 20px;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(96, 29, 1, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+strong,
+a#link-to-olla {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 700;
+    color: #ff5531;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-size: 1.25rem;
+}

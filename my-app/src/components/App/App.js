@@ -8,13 +8,13 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1 className="title">
-Login Test
+       Welcome to Olla AI 
         </h1>
       </header>
       <div className="container-fluid">
         <div className="App">
-          <div className="row d-flex">
-            <div className="col-12">
+          <div className="row text-center d-flex">
+            <div className="col-12 my-3 pt-2">
               <LoginButton />
               <div id="profile"></div>
             </div>
