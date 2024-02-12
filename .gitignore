@@ -12,3 +12,4 @@ __pycache__
 ./olla-env
 olla-env
 venv/
+node_modules
