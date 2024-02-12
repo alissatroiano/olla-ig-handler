@@ -63,11 +63,17 @@
 {% get_providers as socialaccount_providers %}
 
 {% if socialaccount_providers %}
+
+
 <div class="socialaccount_ballot">
+
     {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+
 
   <div class="login-or">{% trans 'or' %}</div>
   {% providers_media_js %}
+  <a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>`
+  
 {% include "socialaccount/snippets/login_extra.html" %}
 
 </div>
