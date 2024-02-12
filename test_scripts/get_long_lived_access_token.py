@@ -1,4 +1,6 @@
-from scripts.dictionary import getCreds, make_api_call
+import os
+import json
+from dictionary import getCreds, make_api_call
 
 def get_long_lived_access_token(params):
     endpoint_params = {
@@ -20,7 +22,7 @@ response = get_long_lived_access_token(params)
 
 print("\n ---- ACCESS TOKEN INFO ----\n")
 
-# Check if the 'json_data' key is present in the response
+# Check if the 'json_data' key is present in the responses
 if 'json_data' in response:
     # Check if the access_token_key exists in the 'json_data' dictionary
     if access_token_key in response['json_data']:

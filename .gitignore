@@ -3,3 +3,9 @@ mdb/
 assets/js/.env
 my-app/public/env.js
 my-app/.env
+olla-env/
+env.py
+.DS_Store
+olla_ig/.DS_Store
+test_scripts/__pycache__
+__pycache__

@@ -11,13 +11,16 @@ const LoginButton = () => {
   };
 
 const responseFacebook = response => {
-    console.log(response.accessToken);
+    // console.log(response.accessToken);
+    setAccessToken(response.accessToken);
   }
 
   return (
     <div>
           Login with Facebook
           <br />
+          User Short-Lived Access Token:
+          {accessToken}
           <FacebookLogin
             appId="7130922673611664"
             autoLoad={true}
