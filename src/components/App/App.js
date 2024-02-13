@@ -1,7 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
 // import env from "react-dotenv";
-import LoginButton from "../Login/LoginButton";
 import StepByStep from "../StepByStep/StepByStep";
 
 function App() {

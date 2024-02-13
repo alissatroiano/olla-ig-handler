@@ -1,0 +1,28 @@
+.table-step {
+    margin: 0 auto;
+    margin-top: 16px;
+    border-collapse: collapse;
+}
+
+table { 
+    table-layout: fixed;
+     width:100% 
+
+    }
+th {
+    word-wrap:normal;
+    padding: 5px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  overflow: auto; 
+  overflow-y:hidden;
+}
+
+
+tr td {
+    white-space: normal;
+    word-wrap: normal;
+}
+
