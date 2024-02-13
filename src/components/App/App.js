@@ -1,12 +1,8 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-// import env from "react-dotenv";
-import LoginButton from "../Login/LoginButton";
 import StepByStep from "../StepByStep/StepByStep";
 
 function App() {
-  const [imageUrl, setImageUrl] = useState("");
-  const [postCaption, setPostCaption] = useState("");
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
 
 
@@ -25,7 +21,7 @@ function App() {
       {
         // Scopes that allow us to publish content to Instagram
         scope:
-          "instagram_basic,pages_show_list, instagram_content_publish, business_management,instagram_manage_comments, instagram_manage_insights, instagram_manage_messages,pages_read_engagement, pages_manage_metadata, pages_read_user_content, pages_manage_posts ",
+          "instagram_basic,pages_show_list,instagram_content_publish, business_management,instagram_manage_comments, instagram_manage_insights, instagram_manage_messages,pages_read_engagement, pages_manage_metadata, pages_read_user_content, pages_manage_posts ",
       }
     );
   };
@@ -41,69 +37,6 @@ function App() {
    * --------------------------------------------------------
    */
 
-  const getFacebookPages = () => {
-    return new Promise((resolve) => {
-      window.FB.api(
-        "me/accounts",
-        { access_token: facebookUserAccessToken },
-        (response) => {
-          resolve(response.data);
-        }
-      );
-    });
-  };
-
-  const getInstagramAccountId = (facebookPageId) => {
-    return new Promise((resolve) => {
-      window.FB.api(
-        facebookPageId,
-        {
-          access_token: facebookUserAccessToken,
-          fields: "instagram_business_account",
-        },
-        (response) => {
-          resolve(response.instagram_business_account.id);
-          console.log(facebookPageId);
-        }
-      );
-    });
-  };
-
-  const createMediaObjectContainer = (instagramAccountId) => {
-    return new Promise((resolve) => {
-      window.FB.api(
-        `${instagramAccountId}/media`,
-        "POST",
-        {
-          access_token: facebookUserAccessToken,
-          image_url: imageUrl,
-          caption: postCaption,
-        },
-        (response) => {
-          resolve(response.id);
-        }
-      );
-    });
-  };
-
-  const publishMediaObjectContainer = (
-    instagramAccountId,
-    mediaObjectContainerId
-  ) => {
-    return new Promise((resolve) => {
-      window.FB.api(
-        `${instagramAccountId}/media_publish`,
-        "POST",
-        {
-          access_token: facebookUserAccessToken,
-          creation_id: mediaObjectContainerId,
-        },
-        (response) => {
-          resolve(response.id);
-        }
-      );
-    });
-  };
 
   return (
     <div className="App">
@@ -134,8 +67,6 @@ function App() {
                 )}
                      <StepByStep facebookUserAccessToken={facebookUserAccessToken} />
               </section>
-         
-              {/* <div id="profile"></div> */}
             </div>
           </div>
         </div>
