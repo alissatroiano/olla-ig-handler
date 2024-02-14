@@ -1,9 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import StepByStep, {
-  shouldShowAllSteps,
-  setShouldShowAllSteps,
-} from "../StepByStep/StepByStep";
+import StepByStep from "../StepByStep/StepByStep";
 
 function App() {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
