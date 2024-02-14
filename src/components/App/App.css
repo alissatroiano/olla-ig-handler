@@ -1,25 +1,52 @@
-.App {
-    background: url('olla-bg.png');
+body {
+    background-image: url('bg-img.png');
+    min-height: 100vh;
+    overflow: hidden;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
-    min-height: 100vh;
-    overflow: none;
 }
 
-.title {
-    font-size: 3rem;
+.appWrapper {
+    margin-top: 100px;
+    padding: 50px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(96, 29, 1, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-height: fit-content;
+    max-width: 90%;
+}
+
+h1.title {
+    font-size: 4.5rem;
     text-align: center;
-    margin-top: 80px;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
     font-family: "Work Sans", sans-serif;
     font-weight: 700;
     color: #ff5531;
+    line-height: .65;
+}
+
+h1 > span.titleSpan {
+    font-weight: 400;
+    color: #2c2c2c;
+    letter-spacing: 1.5px;
+    font-size: 2rem;
+}
+
+.intro {
+    margin: 50px;
 }
 
 .welcome-container {
     padding: 20px;
+    margin: 50px auto;
+    background: none;
+    border: none;
 }
 
 .loginDetails {
@@ -27,18 +54,12 @@
     font-weight: 400;
     color: #0a0a0a;
     font-size: 1.25rem;
-    letter-spacing: -1px;
+    margin: 20px 40px;
 }
 
 .welcome-container {
     padding: 20px;
     margin: 50px auto;
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 8px 32px 0 rgba(96, 29, 1, 0.37);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 strong,
@@ -60,6 +81,7 @@ a#link-to-olla {
     padding: 12px;
     border: none;
     cursor: pointer;
+    width: fit-content;
 }
 
 .btn:disabled {

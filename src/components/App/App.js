@@ -20,8 +20,7 @@ function App() {
       },
       {
         // Scopes that allow us to publish content to Instagram
-        scope:
-          "instagram_basic,pages_show_list,instagram_content_publish, business_management,instagram_manage_comments, instagram_manage_insights, instagram_manage_messages,pages_read_engagement, pages_manage_metadata, pages_read_user_content, pages_manage_posts ",
+        scope: "instagram_basic,pages_show_list",
       }
     );
   };
@@ -32,30 +31,29 @@ function App() {
     });
   };
 
-  /* --------------------------------------------------------
-   *             INSTAGRAM AND FACEBOOK GRAPH APIs
-   * --------------------------------------------------------
-   */
-
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1 className="title">Welcome to Olla AI</h1>
-      </header>
       <div className="container-fluid">
-        <div className="App">
           <div className="row text-center d-flex justify-content-center align-items-center">
-            <div className="col-10 my-3 pt-2">
+            <div className="appWrapper p-1 p-md-3">
+            <div className="col-12 my-3 pt-2">
             <section className="card h-100 welcome-container">
-            <div className="loginDetails">
+              <div className="intro">
+            <h1 className="title mb-3">OLLA AI <br /><span className="titleSpan">FOR INSTAGRAM</span></h1>
+            </div>
+            <div className="instructions px-md-3">
+            <p className="loginDetails">
             Login with Facebook to give <strong>
               <a href="www.olla.ai" target='_blank' id='link-to-olla'>
               Olla AI
               </a> </strong>
               permission to access your
-            Instagram Business Account's data
+            Instagram Business Account's data.
+          </p>
           </div>
+          <div className="row d-flex align-items-center justify-content-center">
+          <div className="col-6">
                 {facebookUserAccessToken ? (
                   <button onClick={logOutOfFB} className="btn action-btn">
                     Log out of Facebook
@@ -65,13 +63,18 @@ function App() {
                     Login with Facebook
                   </button>
                 )}
+                </div>
+                <div className="col-6">
                      <StepByStep facebookUserAccessToken={facebookUserAccessToken} />
+                     </div>
+                     </div>
               </section>
+            </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
   );
 }
 

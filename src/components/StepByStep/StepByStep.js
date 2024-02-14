@@ -20,7 +20,7 @@ function StepByStep(props) {
             : setShouldShowAllSteps(true)
         }
       >
-        {shouldShowAllSteps ? "Hide" : "Show all API requests step by step"}
+        {shouldShowAllSteps ? "Hide" : "Get Data"}
       </button>
       {shouldShowAllSteps ? (
         <table className="table-step">
