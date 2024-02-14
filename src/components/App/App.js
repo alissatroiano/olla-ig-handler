@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import StepByStep from "../StepByStep/StepByStep";
+import StepByStep, {shouldShowAllSteps, setShouldShowAllSteps } from "../StepByStep/StepByStep";
 
 function App() {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
@@ -35,15 +35,14 @@ function App() {
   return (
     <div className="App">
       <div className="container-fluid">
-          <div className="row text-center d-flex justify-content-center align-items-center">
-            <div className="appWrapper p-1 p-md-3">
+          <div className="row text-center d-flex justify-content-center align-items-center my-0 mx-auto">
+            <div className="appWrapper py-3 py-md-5 card h-100 welcome-container">
             <div className="col-12 my-3 pt-2">
-            <section className="card h-100 welcome-container">
               <div className="intro">
-            <h1 className="title mb-3">OLLA AI <br /><span className="titleSpan">FOR INSTAGRAM</span></h1>
+            <h1 className="title my-3">OLLA AI <br /><span className="titleSpan">FOR INSTAGRAM</span></h1>
             </div>
-            <div className="instructions px-md-3">
-            <p className="loginDetails">
+            <div className="instructions">
+            <p className="loginDetails px-3 px-md-4">
             Login with Facebook to give <strong>
               <a href="www.olla.ai" target='_blank' id='link-to-olla'>
               Olla AI
@@ -51,9 +50,7 @@ function App() {
               permission to access your
             Instagram Business Account's data.
           </p>
-          </div>
-          <div className="row d-flex align-items-center justify-content-center">
-          <div className="col-6">
+     
                 {facebookUserAccessToken ? (
                   <button onClick={logOutOfFB} className="btn action-btn">
                     Log out of Facebook
@@ -63,18 +60,17 @@ function App() {
                     Login with Facebook
                   </button>
                 )}
-                </div>
-                <div className="col-6">
+                     </div>
+                    </div>
+                    <div className="col-12 text-center align-items-center justify-content-center">
                      <StepByStep facebookUserAccessToken={facebookUserAccessToken} />
                      </div>
+                    </div>
+               
                      </div>
-              </section>
             </div>
-            </div>
+            
           </div>
-        </div>
-      </div>
-
   );
 }
 

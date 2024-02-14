@@ -10,7 +10,7 @@ function StepByStep(props) {
   const [containerId, setContainerId] = useState();
 
   return (
-    <div>
+  <div>
       <button
         className="btn action-btn"
         style={{ margin: "20px" }}
@@ -22,13 +22,15 @@ function StepByStep(props) {
       >
         {shouldShowAllSteps ? "Hide" : "Get Data"}
       </button>
+      
+      <div className="table-responsive">
       {shouldShowAllSteps ? (
-        <table className="table-step">
+        <table className="table table-striped align-middle">
           <thead>
             <tr>
-              <th width="200">Step description</th>
-              <th width="60">HTTP method</th>
-              <th width="515">Endpoint</th>
+              <th>Step description</th>
+              <th>HTTP method</th>
+              <th>Endpoint</th>
               <th>Request query parameters</th>
               <th>Response</th>
             </tr>
@@ -90,7 +92,8 @@ function StepByStep(props) {
           </tbody>
         </table>
       ) : null}
-    </div>
+      </div>
+      </div>
   );
 }
 
