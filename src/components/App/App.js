@@ -52,7 +52,6 @@ function App() {
                   </strong>
                   permission to access your Instagram Business Account's data.
                 </p>
-
                 {facebookUserAccessToken ? (
                   <button onClick={logOutOfFB} className="btn action-btn">
                     Log out of Facebook

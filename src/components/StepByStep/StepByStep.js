@@ -8,6 +8,7 @@ function StepByStep(props) {
   // eslint-disable-next-line
   const [instagramAccountId, setInstagramAccountId] = useState();
   const [containerId, setContainerId] = useState();
+  const [instagramPosts, setInstagramPosts] = useState();
 
   return (
     <div>
@@ -45,6 +46,7 @@ function StepByStep(props) {
                 }}
                 isDisabled={!facebookUserAccessToken}
               />
+
               <StepRow
                 description="2. Get Instagram business account connected to the Facebook page"
                 method="GET"
@@ -59,20 +61,17 @@ function StepByStep(props) {
                 isDisabled={facebookPages.length === 0}
               />
 
-              <StepRow
-                description="3. Create a media object container"
-                method="POST"
+
+             <StepRow
+                description="3. Get Instagram Posts & Comments"
+                method="GET"
                 endpoint={`${instagramAccountId}/media`}
-                requestQueryParams={{
-                  access_token: facebookUserAccessToken,
-                  image_url:
-                    "https://images.unsplash.com/photo-1596480047305-57b3094a2df5",
-                  caption: "Look at this awesome #seagull",
-                }}
+                requestQueryParams={{ 
+                  access_token: facebookUserAccessToken }}
                 onResponseReceived={(response) => {
-                  setContainerId(response.id);
+                  setInstagramPosts(response.data);
                 }}
-                isDisabled={!instagramAccountId}
+                isDisabled={!facebookUserAccessToken}
               />
 
               <StepRow

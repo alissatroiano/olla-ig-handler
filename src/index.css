@@ -1,5 +1,5 @@
 #root {
-  background: url('../src/components/App/bg-img.png');
+  background-image: url('../src/components/App/bg-img.png');
   min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
