@@ -22,7 +22,6 @@ function StepByStep(props) {
       >
         {shouldShowAllSteps ? "Hide" : "Get Data"}
       </button>
-
       <div className="table-responsive">
         {shouldShowAllSteps ? (
           <table className="table table-striped align-middle">
