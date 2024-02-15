@@ -49,13 +49,13 @@ function StepByStep(props) {
               <StepRow
                 description="2. Get Instagram business account connected to the Facebook page"
                 method="GET"
-                endpoint={`${facebookPages[0]?.id}?fields=instagram_business_account`}
+                endpoint={`${facebookPages[0]?.id}?fields=instagram_business_account?access_token=${facebookUserAccessToken}`}
                 requestQueryParams={{
                   access_token: facebookUserAccessToken,
                   fields: "instagram_business_account",
                 }}
                 onResponseReceived={(response) => {
-                  console.log(response);
+                  setInstagramAccountId(response.instagram_business_account.id);
                 }}
                 isDisabled={facebookPages.length === 0}
               />
