@@ -7,7 +7,10 @@ function StepByStep(props) {
   const [facebookPages, setFacebookPages] = useState([]);
   // eslint-disable-next-line
   const [instagramAccountId, setInstagramAccountId] = useState();
-
+  const [instagramMediaID, setInstagramMediaID] = useState()
+  const [mediaList, setMediaList] = useState([])
+  // eslint-disable-next-line
+  const [commentList, setCommentList] = useState()
 
   return (
     <section className="getInstagramAccountId">
@@ -45,7 +48,6 @@ function StepByStep(props) {
                 }}
                 isDisabled={!facebookUserAccessToken}
               />
-
               <StepRow
                 description="2. Get Instagram business account connected to the Facebook page"
                 method="GET"
@@ -61,6 +63,28 @@ function StepByStep(props) {
                 }}
                 isDisabled={facebookPages.length === 0}
               />
+              <StepRow
+                description="Get media objects"
+                method="GET"
+                endpoint={`${instagramAccountId}/media`}
+                requestQueryParams={{access_token: facebookUserAccessToken}}
+                onResponseReceived={(response) => {
+                  setMediaList(response.data);
+                  const mediaList = response.data;
+                  console.log(mediaList);
+                }}
+                />
+             <StepRow
+                description="Get Comments"
+                method="GET"
+                endpoint={`${mediaList[0]?.id}/comments`}
+                requestQueryParams={{access_token: facebookUserAccessToken}}
+                onResponseReceived={(response) => {
+                  setCommentList(response.data);
+                  const commentList = response.data;
+                  console.log(commentList);
+                }}
+             />
             </tbody>
           </table>
         ) : null}
