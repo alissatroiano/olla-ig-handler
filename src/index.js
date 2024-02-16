@@ -6,6 +6,9 @@ import './index.css';
 import App from './components/App/App';
 import reportWebVitals from "./reportWebVitals";
 import initFacebookSDK from "./initFacebookSDK";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
+<FontAwesomeIcon icon="fa-brands fa-facebook" />
 
 const renderApp = () => {
   ReactDOM.render(

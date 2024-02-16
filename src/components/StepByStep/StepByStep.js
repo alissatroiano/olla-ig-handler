@@ -11,7 +11,7 @@ function StepByStep(props) {
   const [instagramPosts, setInstagramPosts] = useState();
 
   return (
-    <div>
+    <section className="getComments">
       <button
         className="step-btn"
         style={{ margin: "20px" }}
@@ -21,7 +21,7 @@ function StepByStep(props) {
             : setShouldShowAllSteps(true)
         }
       >
-        {shouldShowAllSteps ? "Hide" : "Get Data"}
+        {shouldShowAllSteps ? "Hide" : "Get Posts"}
       </button>
       <div className="table-responsive">
         {shouldShowAllSteps ? (
@@ -89,7 +89,7 @@ function StepByStep(props) {
           </table>
         ) : null}
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -129,7 +129,7 @@ const StepRow = (props) => {
         ) : (
           <button
             onClick={completeStep}
-            className="btn action-btn"
+            className="send-request"
             disabled={isDisabled || isSendingRequest}
           >
             {isSendingRequest ? "Sending..." : "Send request"}
