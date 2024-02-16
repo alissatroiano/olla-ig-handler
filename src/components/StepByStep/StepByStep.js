@@ -7,11 +7,10 @@ function StepByStep(props) {
   const [facebookPages, setFacebookPages] = useState([]);
   // eslint-disable-next-line
   const [instagramAccountId, setInstagramAccountId] = useState();
-  const [containerId, setContainerId] = useState();
-  const [instagramPosts, setInstagramPosts] = useState();
+
 
   return (
-    <section className="getComments">
+    <section className="getInstagramAccountId">
       <button
         className="step-btn"
         style={{ margin: "20px" }}
@@ -57,33 +56,10 @@ function StepByStep(props) {
                 }}
                 onResponseReceived={(response) => {
                   setInstagramAccountId(response.instagram_business_account.id);
+                  response = response.id[0]
+                  console.log(instagramAccountId)
                 }}
                 isDisabled={facebookPages.length === 0}
-              />
-
-
-             <StepRow
-                description="3. Get Instagram Posts & Comments"
-                method="GET"
-                endpoint={`${instagramAccountId}/media`}
-                requestQueryParams={{ 
-                  access_token: facebookUserAccessToken }}
-                onResponseReceived={(response) => {
-                  setInstagramPosts(response.data);
-                }}
-                isDisabled={!facebookUserAccessToken}
-              />
-
-              <StepRow
-                description="4. Publish the media object container"
-                method="POST"
-                endpoint={`${instagramAccountId}/media_publish`}
-                requestQueryParams={{
-                  access_token: facebookUserAccessToken,
-                  creation_id: containerId,
-                }}
-                onResponseReceived={() => {}}
-                isDisabled={!containerId}
               />
             </tbody>
           </table>
