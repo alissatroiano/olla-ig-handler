@@ -13,20 +13,19 @@
 }
 
 h1.title {
-    font-size: 4.5rem;
+    font-size: 2.85rem;
     text-align: center;
-    /* margin-bottom: 30px; */
     font-family: "Work Sans", sans-serif;
     font-weight: 700;
     color: #ff5531;
     line-height: .65;
 }
 
-h1 > span.titleSpan {
+h1>span.titleSpan {
     font-weight: 400;
     color: #2c2c2c;
     letter-spacing: 1.5px;
-    font-size: 2rem;
+    font-size: 1.2rem;
 }
 
 .intro {
@@ -41,11 +40,17 @@ h1 > span.titleSpan {
 }
 
 .loginDetails {
-    font-family: "Work Sans", sans-serif;
+    font-family: "Red Hat Display", sans-serif;
+    font-optical-sizing: auto;
     font-weight: 400;
-    color: #0a0a0a;
-    font-size: 1.25rem;
-    margin: 20px 40px;
+    font-style: normal;
+    color: #2f1305;
+    font-size: 1rem;
+    letter-spacing: .5px;
+}
+
+.instructions {
+    padding: 0 30px;
 }
 
 .welcome-container {
@@ -65,19 +70,40 @@ a#link-to-olla {
 }
 
 .btn {
-    border-radius: 4px;
-    color: #e4e6eb;
-    font-size: 16px;
-    font-weight: 600;
+    color: #fafafa;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
     padding: 12px;
     border: none;
     cursor: pointer;
     width: fit-content;
+    font-size: 1rem;
+    letter-spacing: .5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
 }
+
+.step-btn {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    font-size: 1rem;
+    letter-spacing: .5px;
+    background-color: #ff5331f5;
+    color: #fafafa;
+    border-radius: 6.25px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
 
 .btn:disabled {
     background-color: #494949;
-    color: #ccc;
+    color: #fafafa;
 }
 
 .btn:disabled:hover {
@@ -89,6 +115,64 @@ a#link-to-olla {
 }
 
 .action-btn {
-    background-color: #2d88ff;
+    background-color: #0e4894e3;
     margin-top: 8px;
+    color: #fafafa;
+    margin-top: 20px;
+}
+
+.action-btn:hover {
+    background-color: #052144d7;
+    color: #fafafa;
+}
+
+
+@media only screen and (min-width: 768px) {
+    h1.title {
+        font-size: 4rem;
+        text-align: center;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 700;
+        color: #ff5531;
+        line-height: .65;
+    }
+
+    h1>span.titleSpan {
+        font-weight: 400;
+        color: #2c2c2c;
+        letter-spacing: 1.25px;
+        font-size: 1.75rem;
+        text-align: center;
+    }
+
+    .loginDetails {
+        font-size: 1.25rem;
+    }
+
+    .btn, .step-btn {
+        font-size: 1.25rem;
+        letter-spacing: 1px;
+    }
+
+}
+
+@media only screen and (min-width: 1200px) {
+    h1.title {
+        font-size: 5rem;
+        text-align: center;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 700;
+        color: #ff5531;
+        line-height: .65;
+    }
+
+    h1>span.titleSpan {
+        font-weight: 400;
+        color: #2c2c2c;
+        letter-spacing: 1.75px;
+        font-size: 2rem;
+        text-align: center;
+        font-weight: 400;
+    }
+
 }

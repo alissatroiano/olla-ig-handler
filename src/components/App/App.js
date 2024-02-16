@@ -35,14 +35,14 @@ function App() {
       <div className="container-fluid">
         <div className="row text-center d-flex justify-content-center align-items-center my-0 mx-auto">
           <div className="appWrapper py-3 py-md-5 card h-100 welcome-container">
-            <div className="col-12 my-3 pt-2">
-              <div className="intro">
+            <div className="col-12 my-3 pt-2 pt-sm-3 pt-md-4">
                 <h1 className="title my-3">
                   OLLA AI <br />
                   <span className="titleSpan">FOR INSTAGRAM</span>
                 </h1>
               </div>
-              <div className="instructions">
+              <div className="col-12 col-sm-8 offset-sm-2">
+              <div className="instructions my-3 my-md-4">
                 <p className="loginDetails px-3 px-md-4">
                   Login with Facebook to give{" "}
                   <strong>
@@ -53,15 +53,15 @@ function App() {
                   permission to access your Instagram Business Account's data.
                 </p>
                 {facebookUserAccessToken ? (
-                  <button onClick={logOutOfFB} className="btn action-btn">
+                  <button onClick={logOutOfFB} className="btn action-btn" id="logoutBtn">
                     Log out of Facebook
                   </button>
                 ) : (
-                  <button onClick={logInToFB} className="btn action-btn">
+                  <button onClick={logInToFB} className="btn action-btn" id="loginBtn">
                     Login with Facebook
                   </button>
                 )}
-              </div>
+              </div>       
             </div>
             <div className="col-12 text-center align-items-center justify-content-center">
               <StepByStep facebookUserAccessToken={facebookUserAccessToken} />

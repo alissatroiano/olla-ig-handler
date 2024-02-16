@@ -13,7 +13,7 @@ function StepByStep(props) {
   return (
     <div>
       <button
-        className="btn action-btn"
+        className="step-btn"
         style={{ margin: "20px" }}
         onClick={() =>
           shouldShowAllSteps
