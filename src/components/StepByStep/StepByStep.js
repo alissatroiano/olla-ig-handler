@@ -56,8 +56,8 @@ function StepByStep(props) {
                 }}
                 onResponseReceived={(response) => {
                   setInstagramAccountId(response.instagram_business_account.id);
-                  response = response.id[0]
-                  console.log(instagramAccountId)
+                  const instagramAccountId = response.instagram_business_account.id;
+                  console.log(instagramAccountId);
                 }}
                 isDisabled={facebookPages.length === 0}
               />
@@ -96,7 +96,7 @@ const StepRow = (props) => {
       <td>{description}</td>
       <td>{method}</td>
       <td>{`https://graph.facebook.com/v19.0/${endpoint}`}</td>
-      <td id="requestParams">
+      <td>
         <pre>{JSON.stringify(requestQueryParams, null, 2)}</pre>
       </td>
       <td>
