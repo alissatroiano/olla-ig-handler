@@ -10,7 +10,6 @@ table {
     border-collapse: collapse;
 }
 
-
 td, th {
   border: 1px solid #dddddd;
   padding: 3px;
@@ -19,3 +18,7 @@ td, th {
   font-family: 'Work Sans', sans-serif;
   font-size: 14px;
 }
+/* 
+pre.response {
+ display: none;
+} */

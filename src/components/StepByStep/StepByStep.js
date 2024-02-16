@@ -8,7 +8,6 @@ function StepByStep(props) {
   // eslint-disable-next-line
   const [instagramAccountId, setInstagramAccountId] = useState();
   const [containerId, setContainerId] = useState();
-  const [instagramPosts, setInstagramPosts] = useState();
 
   return (
     <section className="getComments">
@@ -60,20 +59,21 @@ function StepByStep(props) {
                 }}
                 isDisabled={facebookPages.length === 0}
               />
-
-
-             <StepRow
-                description="3. Get Instagram Posts & Comments"
-                method="GET"
+                <StepRow
+                description="3. Create a media object container"
+                method="POST"
                 endpoint={`${instagramAccountId}/media`}
-                requestQueryParams={{ 
-                  access_token: facebookUserAccessToken }}
-                onResponseReceived={(response) => {
-                  setInstagramPosts(response.data);
+                requestQueryParams={{
+                  access_token: facebookUserAccessToken,
+                  image_url:
+                    "https://images.unsplash.com/photo-1596480047305-57b3094a2df5",
+                  caption: "Look at this awesome #seagull",
                 }}
-                isDisabled={!facebookUserAccessToken}
+                onResponseReceived={(response) => {
+                  setContainerId(response.id);
+                }}
+                isDisabled={!instagramAccountId}
               />
-
               <StepRow
                 description="4. Publish the media object container"
                 method="POST"
@@ -120,12 +120,13 @@ const StepRow = (props) => {
       <td>{description}</td>
       <td>{method}</td>
       <td>{`https://graph.facebook.com/v19.0/${endpoint}`}</td>
-      <td>
+      <td className="requestParams">
         <pre>{JSON.stringify(requestQueryParams, null, 2)}</pre>
       </td>
-      <td>
+      <td className="responseText">
         {response ? (
           <pre>{JSON.stringify(response, null, 2)}</pre>
+          
         ) : (
           <button
             onClick={completeStep}
