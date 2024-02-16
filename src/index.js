@@ -19,7 +19,6 @@ root.render(
   </StrictMode>
 );
 
-
 initFacebookSDK().then(() => {
   createRoot();
 });
