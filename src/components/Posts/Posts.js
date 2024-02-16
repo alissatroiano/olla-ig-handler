@@ -3,12 +3,11 @@ import instagramAccountId from "../StepByStep.js";
 import "./Posts.css";
 
 export default class Instagram extends React.Component {
-    state = { photos: [], comments: [], loading: true }
+    state = { comments: [], loading: true }
   
      // Your specifications
     INSTAGRAM_ID = instagramAccountId
-    THUMBNAIL_WIDTH = 640
-    PHOTO_COUNT = 10
+    COMMEN_COUNT = 10
 
     async componentDidMount() {
         try {

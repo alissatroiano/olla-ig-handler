@@ -96,7 +96,7 @@ const StepRow = (props) => {
       <td>{description}</td>
       <td>{method}</td>
       <td>{`https://graph.facebook.com/v19.0/${endpoint}`}</td>
-      <td>
+      <td id="requestParams">
         <pre>{JSON.stringify(requestQueryParams, null, 2)}</pre>
       </td>
       <td>
