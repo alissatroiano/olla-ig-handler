@@ -11,6 +11,5 @@ root.render(<App tab="home" />);
 
 
 initFacebookSDK().then(() => {
-  // Call the function to render the app after initializing the Facebook SDK
   root.render(<App tab="home" />);
 });

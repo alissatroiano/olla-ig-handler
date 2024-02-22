@@ -1,4 +1,4 @@
-const FACEBOOK_APP_ID = "769085131749502";
+const FACEBOOK_APP_ID = "1109094990263570";
 
 export default function initFacebookSDK() {
   return new Promise((resolve) => {
