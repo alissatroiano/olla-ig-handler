@@ -99,7 +99,6 @@ a#link-to-olla {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
-
 .step-btn {
     font-family: "Oswald", sans-serif;
     text-transform: uppercase;
@@ -129,7 +128,6 @@ a#link-to-olla {
 
 }
 
-
 .btn:disabled {
     background-color: #494949;
     color: #fafafa;
@@ -143,17 +141,14 @@ a#link-to-olla {
     filter: brightness(0.9);
 }
 
-.action-btn {
+
+
+button#loginBtn,
+button#logoutBtn {
     background-color: #1877F2;
     margin-top: 8px;
     color: #fafafa;
     margin-top: 20px;
-}
-
-.action-btn:hover {
-    background-color: transparent;
-    border: 1.5px solid #1877F2;
-    color: #1877F2;
 }
 
 
