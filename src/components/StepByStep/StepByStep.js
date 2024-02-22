@@ -7,6 +7,7 @@ function StepByStep(props) {
   const [facebookPages, setFacebookPages] = useState([]);
   const [instagramAccountId, setInstagramAccountId] = useState();
   const [mediaList, setMediaList] = useState([]);
+   // eslint-disable-next-line
   const [commentList, setCommentList] = useState([]);
 
   const fetchCommentsForMedia = async (mediaId) => {
@@ -93,7 +94,7 @@ function StepByStep(props) {
                   endpoint={`${media.id}/comments`}
                   requestQueryParams={{ access_token: facebookUserAccessToken }}
                   onResponseReceived={(response) => {
-                    console.log(`Comments for Media ID ${media.id}:`, response);
+                    return (`Comments for Media ID ${media.id}:`, response);
                   }}
                   isDisabled={!facebookUserAccessToken}
                 />
