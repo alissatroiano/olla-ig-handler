@@ -5,25 +5,43 @@ function StepByStep(props) {
   const { facebookUserAccessToken } = props;
   const [shouldShowAllSteps, setShouldShowAllSteps] = useState(false);
   const [facebookPages, setFacebookPages] = useState([]);
-  // eslint-disable-next-line
   const [instagramAccountId, setInstagramAccountId] = useState();
-  const [containerId, setContainerId] = useState();
+  const [mediaList, setMediaList] = useState([]);
+  const [commentList, setCommentList] = useState([]);
+
+  const fetchCommentsForMedia = async (mediaId) => {
+    try {
+      const commentsResponse = await window.FB.api(`/${mediaId}/comments`, {
+        access_token: facebookUserAccessToken,
+      });
+      return commentsResponse.data;
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      return [];
+    }
+  };
+
+  const handleGetComments = async () => {
+    const comments = await Promise.all(
+      mediaList.map(async (media) => {
+        const commentsForMedia = await fetchCommentsForMedia(media.id);
+        return commentsForMedia;
+      })
+    );
+    setCommentList(comments);
+  };
 
   return (
-    <section className="getComments">
+    <section className="getInstagramAccountId">
       <button
         className="step-btn"
         style={{ margin: "20px" }}
-        onClick={() =>
-          shouldShowAllSteps
-            ? setShouldShowAllSteps(false)
-            : setShouldShowAllSteps(true)
-        }
+        onClick={() => setShouldShowAllSteps(!shouldShowAllSteps)}
       >
-        {shouldShowAllSteps ? "Hide" : "Get Posts"}
+        {shouldShowAllSteps ? "Hide" : "Get Comments"}
       </button>
       <div className="table-responsive">
-        {shouldShowAllSteps ? (
+        {shouldShowAllSteps && (
           <table className="table table-striped align-middle">
             <thead>
               <tr>
@@ -45,7 +63,6 @@ function StepByStep(props) {
                 }}
                 isDisabled={!facebookUserAccessToken}
               />
-
               <StepRow
                 description="2. Get Instagram business account connected to the Facebook page"
                 method="GET"
@@ -59,36 +76,37 @@ function StepByStep(props) {
                 }}
                 isDisabled={facebookPages.length === 0}
               />
-                <StepRow
-                description="3. Create a media object container"
-                method="POST"
-                endpoint={`${instagramAccountId}/media`}
-                requestQueryParams={{
-                  access_token: facebookUserAccessToken,
-                  image_url:
-                    "https://images.unsplash.com/photo-1596480047305-57b3094a2df5",
-                  caption: "Look at this awesome #seagull",
-                }}
-                onResponseReceived={(response) => {
-                  setContainerId(response.id);
-                }}
-                isDisabled={!instagramAccountId}
-              />
               <StepRow
-                description="4. Publish the media object container"
-                method="POST"
-                endpoint={`${instagramAccountId}/media_publish`}
-                requestQueryParams={{
-                  access_token: facebookUserAccessToken,
-                  creation_id: containerId,
+                description="3. Get media objects"
+                method="GET"
+                endpoint={`${instagramAccountId}/media`}
+                requestQueryParams={{ access_token: facebookUserAccessToken }}
+                onResponseReceived={(response) => {
+                  setMediaList(response.data);
                 }}
-                onResponseReceived={() => {}}
-                isDisabled={!containerId}
               />
+              {mediaList.map((media) => (
+                <StepRow
+                  key={media.id}
+                  description={`Get Comments for Media ID: ${media.id}`}
+                  method="GET"
+                  endpoint={`${media.id}/comments`}
+                  requestQueryParams={{ access_token: facebookUserAccessToken }}
+                  onResponseReceived={(response) => {
+                    console.log(`Comments for Media ID ${media.id}:`, response);
+                  }}
+                  isDisabled={!facebookUserAccessToken}
+                />
+              ))}
             </tbody>
           </table>
-        ) : null}
+        )}
       </div>
+      {shouldShowAllSteps && (
+        <button onClick={handleGetComments} disabled={mediaList.length === 0}>
+          Get Comments
+        </button>
+      )}
     </section>
   );
 }
