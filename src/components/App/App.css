@@ -6,18 +6,17 @@
 
 /* **************** Landing */
 .App {
-    background-image: url('bg-img.png');
+    background-image: url('../../../assets/images/bg-mg.png');
     min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    background-position: center;
+    background-position: center right;
 }
 
-.appWrapper {
-    margin-top: 100px;
+.welcome-container {
     padding: 50px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.549);
     box-shadow: 0 8px 32px 0 rgba(96, 29, 1, 0.37);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -27,6 +26,7 @@
     max-width: 90%;
     z-index: 1000;
 }
+
 
 h1.title {
     font-size: 2.85rem;
@@ -48,13 +48,6 @@ h1>span.titleSpan {
     margin: 50px;
 }
 
-.welcome-container {
-    padding: 20px;
-    margin: 50px auto;
-    background: none;
-    border: none;
-}
-
 .loginDetails {
     font-family: "Red Hat Display", sans-serif;
     font-optical-sizing: auto;
@@ -66,12 +59,11 @@ h1>span.titleSpan {
 }
 
 .instructions {
-    padding: 0 30px;
+    padding: 20px 0;
 }
 
 .welcome-container {
-    padding: 20px;
-    margin: 50px auto;
+    margin: 0px auto;
 }
 
 strong,
@@ -141,8 +133,6 @@ a#link-to-olla {
     filter: brightness(0.9);
 }
 
-
-
 button#loginBtn,
 button#logoutBtn {
     background-color: #1877F2;
@@ -172,6 +162,9 @@ button#logoutBtn {
 
     .loginDetails {
         font-size: 1.25rem;
+    }
+    .welcome-container {
+        max-width: 75%;
     }
 }
 

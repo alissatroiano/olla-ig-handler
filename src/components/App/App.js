@@ -102,8 +102,9 @@ function App() {
     <div className="App">
       <div className="container-fluid">
         <div className="row text-center d-flex justify-content-center align-items-center my-0 mx-auto">
-          <div className="appWrapper py-3 py-md-5 card h-100 welcome-container">
-            <div className="col-12 my-3 pt-2 pt-sm-3 pt-md-4">
+          <div className="appWrapper mt-3 mt-md-4 mt-lg-5">
+          <div className="welcome-container mt-3 mt-md-4">
+            <div className="col-12 my-3">
               <h1 className="title my-3">
                 OLLA AI <br />
                 <span className="titleSpan">FOR INSTAGRAM</span>
@@ -111,7 +112,7 @@ function App() {
             </div>
             <div className="col-12 col-sm-8 offset-sm-2">
               <div className="instructions my-3 my-md-4">
-                <p className="loginDetails px-3 px-md-4">
+                <p className="loginDetails px-md-1">
                   Login with Facebook to give{" "}
                   <strong>
                     <a href="www.olla.ai" target="_blank" id="link-to-olla">
@@ -147,6 +148,7 @@ function App() {
                 instagramAccountId={instagramAccountId}
               />
             </div>
+          </div>
           </div>
         </div>
       </div>
