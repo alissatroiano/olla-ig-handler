@@ -126,17 +126,16 @@ function App() {
                     className="btn action-btn"
                     id="logoutBtn"
                   >
-                    Log out 
-                    <FontAwesomeIcon className="icon ms-2" icon={['fab', 'facebook']} />
-                  </button> 
+                    <FontAwesomeIcon className="icon me-2" icon={['fab', 'facebook']} />
+                    Log out  </button> 
                 ) : (
                   <button
                     onClick={logInToFB}
                     className="btn action-btn"
                     id="loginBtn"
                   >
-                    Login
-                    <FontAwesomeIcon className="icon ms-2" icon={['fab', 'facebook']} />
+                    <FontAwesomeIcon className="icon me-2" icon={['fab', 'facebook']} />
+                    Login with Facebook
                   </button>
                 )}
               </div>

@@ -97,7 +97,6 @@ a#link-to-olla {
     font-size: 1rem;
     letter-spacing: .5px;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-
 }
 
 
@@ -145,15 +144,16 @@ a#link-to-olla {
 }
 
 .action-btn {
-    background-color: #0e4894e3;
+    background-color: #1877F2;
     margin-top: 8px;
     color: #fafafa;
     margin-top: 20px;
 }
 
 .action-btn:hover {
-    background-color: #052144d7;
-    color: #fafafa;
+    background-color: transparent;
+    border: 1.5px solid #1877F2;
+    color: #1877F2;
 }
 
 
