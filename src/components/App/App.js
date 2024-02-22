@@ -1,10 +1,10 @@
+import React, { useEffect, useState, useCallback } from "react";
+import initFacebookSDK from "../../initFacebookSDK";
 import "./App.css";
-import React, { useEffect, useState } from "react";
 import StepByStep from "../StepByStep/StepByStep";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import initFacebookSDK from "../../initFacebookSDK";
 
 library.add(fab)
 
@@ -12,24 +12,25 @@ function App() {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
   const [facebookPages, setFacebookPages] = useState([]);
   const [instagramAccountId, setInstagramAccountId] = useState("");
+  // eslint-disable-next-line
   const [mediaList, setMediaList] = useState([]); 
 
-  useEffect(() => {
-    // Check if the user is authenticated with Facebook
-    const checkLoginStatus = async () => {
-      await initFacebookSDK();
-      window.FB.getLoginStatus((response) => {
-        if (response.status === 'connected') {
-          setFacebookUserAccessToken(response.authResponse.accessToken);
-          fetchUserPages(response.authResponse.accessToken);
+  const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
+    window.FB.api(
+      `/${pageId}`,
+      'GET',
+      { access_token: accessToken, fields: 'instagram_business_account' },
+      (response) => {
+        if (response.instagram_business_account) {
+          setInstagramAccountId(response.instagram_business_account.id);
+          console.log("Instagram business account ID:", response.instagram_business_account.id);
+          fetchMediaObjects(pageId, response.instagram_business_account.id, accessToken);
         }
-      });
-    };
-
-    checkLoginStatus();
+      }
+    );
   }, []);
 
-  const fetchUserPages = (accessToken) => {
+  const fetchUserPages = useCallback((accessToken) => {
     window.FB.api(
       '/me/accounts',
       'GET',
@@ -43,22 +44,22 @@ function App() {
         }
       }
     );
-  };
-  
-  const fetchInstagramBusinessAccount = (pageId, accessToken) => {
-    window.FB.api(
-      `/${pageId}`,
-      'GET',
-      { access_token: accessToken, fields: 'instagram_business_account' },
-      (response) => {
-        if (response.instagram_business_account) {
-          setInstagramAccountId(response.instagram_business_account.id);
-          console.log("Instagram business account ID:", response.instagram_business_account.id);
-          fetchMediaObjects(pageId, response.instagram_business_account.id, accessToken);
+  }, [fetchInstagramBusinessAccount]);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      await initFacebookSDK();
+      window.FB.getLoginStatus((response) => {
+        if (response.status === 'connected') {
+          setFacebookUserAccessToken(response.authResponse.accessToken);
+          fetchUserPages(response.authResponse.accessToken);
         }
-      }
-    );
-  };
+      });
+    };
+
+    checkLoginStatus();
+  }, [fetchUserPages]);
+
 
   const fetchMediaObjects = (pageId, instagramAccountId, accessToken) => {
     window.FB.api(

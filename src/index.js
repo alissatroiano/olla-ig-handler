@@ -1,29 +1,16 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-
+import React from "react";
+import { createRoot } from 'react-dom/client';
 import './index.css';
 
 import App from './components/App/App';
-import reportWebVitals from "./reportWebVitals";
 import initFacebookSDK from "./initFacebookSDK";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-<FontAwesomeIcon icon={['fab', 'facebook']} />
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App tab="home" />);
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
-
-root.render(
-  <StrictMode>
-    <App />
-  </StrictMode>
-);
 
 initFacebookSDK().then(() => {
-  createRoot();
+  // Call the function to render the app after initializing the Facebook SDK
+  root.render(<App tab="home" />);
 });
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
