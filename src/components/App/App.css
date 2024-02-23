@@ -14,6 +14,10 @@
     background-position: center right;
 }
 
+.appWrapper {
+    margin: 0px auto;
+}
+
 .welcome-container {
     padding: 50px;
     background: rgba(255, 255, 255, 0.549);
@@ -27,6 +31,14 @@
     z-index: 1000;
 }
 
+.logoImg img {
+    width: 80px;
+    height: auto;
+}
+
+.logoImg {
+    margin: 10px 0 20px 0;
+}
 
 h1.title {
     font-size: 2.85rem;
@@ -185,6 +197,11 @@ button#logoutBtn {
         font-size: 2rem;
         text-align: center;
         font-weight: 400;
+    }
+
+    .logoImg img {
+        width: 110px;
+        height: auto;
     }
 
 }

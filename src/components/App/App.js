@@ -5,6 +5,7 @@ import StepByStep from "../StepByStep/StepByStep";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Logo from "../Logo/Logo";
 
 library.add(fab)
 
@@ -98,19 +99,22 @@ function App() {
     });
   };
 
+
   return (
     <div className="App">
       <div className="container-fluid">
         <div className="row text-center d-flex justify-content-center align-items-center my-0 mx-auto">
-          <div className="appWrapper mt-3 mt-md-4 mt-lg-5">
+          <div className="appWrapper py-5">
           <div className="welcome-container mt-3 mt-md-4">
-            <div className="col-12 my-3">
+          <div className="col-12">
+                <Logo />
+      
               <h1 className="title my-3">
                 OLLA AI <br />
                 <span className="titleSpan">FOR INSTAGRAM</span>
               </h1>
             </div>
-            <div className="col-12 col-sm-8 offset-sm-2">
+            <div className="col-12">
               <div className="instructions my-3 my-md-4">
                 <p className="loginDetails px-md-1">
                   Login with Facebook to give{" "}
