@@ -27,10 +27,11 @@
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.16.7"
+    "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
+    "concurrently": "^8.2.2"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts start",
+    "start": "concurrently \"node server.js\" \"PORT=3001 HTTPS=true react-scripts start \"",
     "build": "CI=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
