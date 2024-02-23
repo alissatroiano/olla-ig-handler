@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import initFacebookSDK from "../../initFacebookSDK";
 import "./App.css";
-import StepByStep from "../StepByStep/StepByStep";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +14,6 @@ function App() {
   const [instagramAccountId, setInstagramAccountId] = useState("");
   // eslint-disable-next-line
   const [mediaList, setMediaList] = useState([]); 
-
   const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
     window.FB.api(
       `/${pageId}`,
@@ -61,7 +59,6 @@ function App() {
     checkLoginStatus();
   }, [fetchUserPages]);
 
-
   const fetchMediaObjects = (pageId, instagramAccountId, accessToken) => {
     window.FB.api(
       `/${instagramAccountId}/media`,
@@ -69,8 +66,30 @@ function App() {
       { access_token: accessToken },
       (response) => {
         if (response.data) {
-          setMediaList(response.data);
-          console.log("Media objects:", response.data);
+          const mostRecentMedia = response.data[0]; // Get the most recent media object
+          console.log("Most recent media object:", mostRecentMedia);
+          
+          // Set the most recent media object in state
+          setMediaList(mostRecentMedia);
+          
+          // Fetch comments for the most recent media object
+          fetchCommentsForMedia(mostRecentMedia.id, accessToken);
+        } else {
+          console.log("No media objects found.");
+        }
+      }
+    );
+  };
+  
+  const fetchCommentsForMedia = (mediaId, accessToken) => {
+    window.FB.api(
+      `/${mediaId}/comments`,
+      "GET",
+      { access_token: accessToken },
+      (response) => {
+        if (response.data) {
+          console.log("Comments for media object:", response.data);
+          const commentsData = response.data
         }
       }
     );
@@ -108,7 +127,6 @@ function App() {
           <div className="welcome-container mt-3 mt-md-4">
           <div className="col-12">
                 <Logo />
-      
               <h1 className="title my-3">
                 OLLA AI <br />
                 <span className="titleSpan">FOR INSTAGRAM</span>
@@ -146,11 +164,7 @@ function App() {
               </div>
             </div>
             <div className="col-12 text-center align-items-center justify-content-center">
-              <StepByStep
-                facebookUserAccessToken={facebookUserAccessToken}
-                facebookPages={facebookPages}
-                instagramAccountId={instagramAccountId}
-              />
+             <button className="getComments" onClick={fetchCommentsForMedia}>Get Comments</button>
             </div>
           </div>
           </div>
