@@ -83,7 +83,7 @@ function App() {
         if (response.data) {
           setComments(response.data);
           console.log(response.data);
-          const comments = response.data;
+          const comments = response.data.text;
           return comments;
         }
       }
@@ -172,14 +172,13 @@ function App() {
                 >
                   Get Comments
                 </button>
-              
+              </div>
               <div className="comments">
                 {comments.map((comment, index) => (
                   <div key={index} className="comment">
                     {comment.message}
                   </div>
                 ))}
-              </div>
               </div>
             </div>
           </div>
