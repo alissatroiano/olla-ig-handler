@@ -3,6 +3,8 @@
 olla-env
 venv/
 env.py
+config.js
+.env
 
 # dependencies
 /node_modules

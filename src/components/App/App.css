@@ -31,7 +31,7 @@
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     max-height: fit-content;
-    max-width: 90%;
+    max-width: 95%;
     z-index: 1000;
 }
 
@@ -184,7 +184,7 @@ button#logoutBtn {
     }
 
     .welcome-container {
-        max-width: 75%;
+        max-width: 80%;
     }
 }
 
@@ -196,6 +196,9 @@ button#logoutBtn {
         font-weight: 700;
         color: #ff5531;
         line-height: .65;
+    }
+    .welcome-container {
+        max-width: 70%;
     }
 
     h1>span.titleSpan {
