@@ -4,6 +4,10 @@
     font-size: 1.125rem;
 }
 
+.bodyFont {
+    font-family: 'Work Sans', sans-serif;
+}
+
 /* **************** Landing */
 .App {
     background-image: url('../../../assets/images/bg-mg.png');

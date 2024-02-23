@@ -165,21 +165,10 @@ function App() {
                 </div>
               </div>
               <div className="col-12 text-center align-items-center justify-content-center">
-                <button
-                  className="getComments"
-                  onClick={fetchCommentsForMedia}
-                  id="commentsData"
-                >
-                  Get Comments
-                </button>
-              </div>
-              <div className="comments">
-                {comments.map((comment, index) => (
-                  <div key={index} className="comment">
-                    {comment.message}
-                  </div>
-                ))}
-              </div>
+             <p className="bodyFont">
+                  View Comments in Console
+              </p>
+    </div>
             </div>
           </div>
         </div>
