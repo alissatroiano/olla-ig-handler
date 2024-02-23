@@ -23,26 +23,33 @@ function App() {
       (response) => {
         if (response.instagram_business_account) {
           setInstagramAccountId(response.instagram_business_account.id);
-          fetchMediaObjects(pageId, response.instagram_business_account.id, accessToken);
+          fetchMediaObjects(
+            pageId,
+            response.instagram_business_account.id,
+            accessToken
+          );
         }
       }
     );
   }, []);
 
-  const fetchUserPages = useCallback((accessToken) => {
-    window.FB.api(
-      "/me/accounts",
-      "GET",
-      { access_token: accessToken },
-      (response) => {
-        setFacebookPages(response.data);
-        if (response.data.length > 0) {
-          const pageId = response.data[0].id;
-          fetchInstagramBusinessAccount(pageId, accessToken);
+  const fetchUserPages = useCallback(
+    (accessToken) => {
+      window.FB.api(
+        "/me/accounts",
+        "GET",
+        { access_token: accessToken },
+        (response) => {
+          setFacebookPages(response.data);
+          if (response.data.length > 0) {
+            const pageId = response.data[0].id;
+            fetchInstagramBusinessAccount(pageId, accessToken);
+          }
         }
-      }
-    );
-  }, [fetchInstagramBusinessAccount]);
+      );
+    },
+    [fetchInstagramBusinessAccount]
+  );
 
   useEffect(() => {
     const checkLoginStatus = async () => {
@@ -68,7 +75,6 @@ function App() {
           const mostRecentMedia = response.data[0];
           setMediaList(mostRecentMedia);
           fetchCommentsForMedia(mostRecentMedia.id, accessToken);
-          
         }
       }
     );
@@ -164,11 +170,18 @@ function App() {
                   )}
                 </div>
               </div>
-              <div className="col-12 text-center align-items-center justify-content-center">
-             <p className="bodyFont">
-                  View Comments in Console
-              </p>
-    </div>
+              <div className="d-flex row">
+                <div className="col-12 col-sm-6 text-center text-sm-end">
+                    <h3 className="heading-comments">Comments from your latest post:</h3>
+              </div>
+              <div className="col-12 col-sm-6 text-center text-sm-start">
+              {comments.map((comment, index) => (
+                  <div key={index} className="comment">
+                    {comment.text}
+                  </div>
+                ))}
+              </div>
+              </div>
             </div>
           </div>
         </div>

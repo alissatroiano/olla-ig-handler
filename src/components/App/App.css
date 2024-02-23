@@ -8,7 +8,7 @@
     font-family: 'Work Sans', sans-serif;
 }
 
-/* **************** Landing */
+/* *************************** Title */
 .App {
     background-image: url('../../../assets/images/bg-mg.png');
     min-height: 100vh;
@@ -93,6 +93,7 @@ a#link-to-olla {
     font-size: 1.25rem;
 }
 
+/* ------------- Facebook Login and Comments  */
 .btn {
     color: #fafafa;
     font-family: "Oswald", sans-serif;
@@ -125,27 +126,18 @@ a#link-to-olla {
 }
 
 .comment {
-    background-color: #fafafa;;
     color: #000;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-family: 'Work Sans', sans-serif;
 }
 
 .getComments:hover {
     background-color: #a3240af2;
 }
 
-
-.send-request {
-    color: #fafafa;
-    background: #ff5331f5;
-    font-size: 14px;
-    font-family: "Oswald", sans-serif;
-    text-transform: uppercase;
+.heading-comments {
+    font-family: 'Oswald', sans-serif;
     font-weight: 400;
-    border: none;
-    padding: 8px;
-    border-radius: 7px;
-
 }
 
 .btn:disabled {
@@ -169,7 +161,6 @@ button#logoutBtn {
     margin-top: 20px;
 }
 
-
 @media only screen and (min-width: 768px) {
     h1.title {
         font-size: 4rem;
@@ -191,6 +182,7 @@ button#logoutBtn {
     .loginDetails {
         font-size: 1.25rem;
     }
+
     .welcome-container {
         max-width: 75%;
     }
