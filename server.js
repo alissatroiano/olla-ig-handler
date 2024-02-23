@@ -1,7 +1,7 @@
+require('dotenv').config(); // Import environment variables
+
 const express = require("express");
 const MindsDB = require("mindsdb-js-sdk");
-const path = require("path");
-const cors = require("cors");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
