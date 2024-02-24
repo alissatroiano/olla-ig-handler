@@ -10,8 +10,11 @@ library.add(fab);
 
 function App() {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
+   // eslint-disable-next-line
   const [facebookPages, setFacebookPages] = useState([]);
+   // eslint-disable-next-line
   const [instagramAccountId, setInstagramAccountId] = useState("");
+   // eslint-disable-next-line
   const [mediaList, setMediaList] = useState([]);
   const [comments, setComments] = useState([]); // New state for comments
 
