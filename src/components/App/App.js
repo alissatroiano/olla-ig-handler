@@ -85,16 +85,23 @@ function App() {
       `/${mediaId}/comments`,
       "GET",
       { access_token: accessToken },
-      (response) => {
+      async (response) => {
         if (response.data) {
           setComments(response.data);
           console.log(response.data);
-          const comments = response.data.text;
-          return comments;
+          const comments = response.data.map(comment => comment.text);
+          await fetch('/comments', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ comments }),
+          });
         }
       }
     );
   };
+  
 
   const logInToFB = () => {
     window.FB.login(
