@@ -1,0 +1,21 @@
+table {
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    table-layout: fixed;
+    width: 100%;
+}
+
+.table-step {
+    margin: 0 auto;
+    margin-top: 16px;
+    border-collapse: collapse;
+}
+
+
+td, th {
+  border: 1px solid #dddddd;
+  padding: 3px;
+  overflow: auto;
+  overflow-y: hidden;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 14px;
+}

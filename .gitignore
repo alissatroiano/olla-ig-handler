@@ -1,3 +1,20 @@
+# env
+./olla-env
+olla-env
+venv/
 env.py
-mdb/
-assets/js/.env
+config.js
+.env
+
+# dependencies
+/node_modules
+package-lock.json
+
+# misc
+.DS_Store
+olla_ig/.DS_Store
+test_scripts/__pycache__
+__pycache__
+
+# Local Netlify folder
+.netlify

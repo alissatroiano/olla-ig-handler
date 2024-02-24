@@ -1,1 +1,6 @@
-# Olla Instagram Reply Tool
+# OLLA for Instagram Business Accounts
+
+# Request Params
+
+ - `POST /{ig-comment-id}/replies?message={message}`
+ - 

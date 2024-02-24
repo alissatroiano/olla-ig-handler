@@ -1,0 +1,218 @@
+/* **************** Global */
+
+.icon {
+    font-size: 1.125rem;
+}
+
+.bodyFont {
+    font-family: 'Work Sans', sans-serif;
+}
+
+/* *************************** Title */
+.App {
+    background-image: url('../../../assets/images/bg-mg.png');
+    min-height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center right;
+}
+
+.appWrapper {
+    margin: 0px auto;
+}
+
+.welcome-container {
+    padding: 50px;
+    background: rgba(255, 255, 255, 0.549);
+    box-shadow: 0 8px 32px 0 rgba(96, 29, 1, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-height: fit-content;
+    max-width: 95%;
+    z-index: 1000;
+}
+
+.logoImg img {
+    width: 80px;
+    height: auto;
+}
+
+.logoImg {
+    margin: 10px 0 20px 0;
+}
+
+h1.title {
+    font-size: 2.85rem;
+    text-align: center;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 700;
+    color: #ff5531;
+    line-height: .65;
+}
+
+h1>span.titleSpan {
+    font-weight: 400;
+    color: #2c2c2c;
+    letter-spacing: 1.5px;
+    font-size: 1.2rem;
+}
+
+.intro {
+    margin: 50px;
+}
+
+.loginDetails {
+    font-family: "Red Hat Display", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    color: #2f1305;
+    font-size: 1rem;
+    letter-spacing: .5px;
+}
+
+.instructions {
+    padding: 20px 0;
+}
+
+.welcome-container {
+    margin: 0px auto;
+}
+
+strong,
+a#link-to-olla {
+    font-family: "Work Sans", sans-serif;
+    font-weight: 700;
+    color: #ff5531;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    font-size: 1.25rem;
+}
+
+/* ------------- Facebook Login and Comments  */
+.btn {
+    color: #fafafa;
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    font-size: 1rem;
+    letter-spacing: .5px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.getComments,
+.step-btn {
+    font-family: "Oswald", sans-serif;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    width: fit-content;
+    font-size: 1rem;
+    letter-spacing: .5px;
+    background-color: #ff5331f5;
+    color: #fafafa;
+    border-radius: 6.25px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.comment {
+    color: #000;
+    font-size: 1rem;
+    font-family: 'Work Sans', sans-serif;
+}
+
+.getComments:hover {
+    background-color: #a3240af2;
+}
+
+.heading-comments {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+}
+
+.btn:disabled {
+    background-color: #494949;
+    color: #fafafa;
+}
+
+.btn:disabled:hover {
+    cursor: not-allowed;
+}
+
+.btn:not(:disabled):hover {
+    filter: brightness(0.9);
+}
+
+button#loginBtn,
+button#logoutBtn {
+    background-color: #1877F2;
+    margin-top: 8px;
+    color: #fafafa;
+    margin-top: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+    h1.title {
+        font-size: 4rem;
+        text-align: center;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 700;
+        color: #ff5531;
+        line-height: .65;
+    }
+
+    h1>span.titleSpan {
+        font-weight: 400;
+        color: #2c2c2c;
+        letter-spacing: 1.25px;
+        font-size: 1.75rem;
+        text-align: center;
+    }
+
+    .loginDetails {
+        font-size: 1.25rem;
+    }
+
+    .welcome-container {
+        max-width: 80%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    h1.title {
+        font-size: 5rem;
+        text-align: center;
+        font-family: "Work Sans", sans-serif;
+        font-weight: 700;
+        color: #ff5531;
+        line-height: .65;
+    }
+    .welcome-container {
+        max-width: 70%;
+    }
+
+    h1>span.titleSpan {
+        font-weight: 400;
+        color: #2c2c2c;
+        letter-spacing: 1.75px;
+        font-size: 2rem;
+        text-align: center;
+        font-weight: 400;
+    }
+
+    .logoImg img {
+        width: 110px;
+        height: auto;
+    }
+
+}
