@@ -5,6 +5,7 @@ venv/
 env.py
 config.js
 .env
+olla/
 
 # dependencies
 /node_modules

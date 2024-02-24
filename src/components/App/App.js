@@ -5,19 +5,17 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../Logo/Logo";
+import axios from "axios";
 
 library.add(fab);
 
 function App() {
   const [facebookUserAccessToken, setFacebookUserAccessToken] = useState("");
-   // eslint-disable-next-line
-  const [facebookPages, setFacebookPages] = useState([]);
-   // eslint-disable-next-line
-  const [instagramAccountId, setInstagramAccountId] = useState("");
-   // eslint-disable-next-line
-  const [mediaList, setMediaList] = useState([]);
-  const [comments, setComments] = useState([]); // New state for comments
-
+  const [, setFacebookPages] = useState([]);
+  const [, setInstagramAccountId] = useState("");
+  const [, setMediaList] = useState([]);
+  // eslint-disable-next-line 
+  const [comments, setComments] = useState([]); 
   const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
     window.FB.api(
       `/${pageId}`,
@@ -82,6 +80,29 @@ function App() {
       }
     );
   };
+  // const fetchCommentsForMedia = (mediaId, accessToken) => {
+  //   window.FB.api(
+  //     `/${mediaId}/comments`,
+  //     "GET",
+  //     { access_token: accessToken },
+  //     async (response) => {
+  //       if (response.data) {
+  //         setComments(response.data);
+  //         console.log(response.data);
+  //         const comments = response.data.map(comment => comment.text);
+  //         await fetch('/comments', {
+  //           method: 'POST',
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //           },
+  //           body: JSON.stringify({ comments }),
+  //         });
+  //       }
+  //     }
+  //   );
+  // };
+
+
 
   const fetchCommentsForMedia = (mediaId, accessToken) => {
     window.FB.api(
@@ -89,22 +110,25 @@ function App() {
       "GET",
       { access_token: accessToken },
       async (response) => {
-        if (response.data) {
-          setComments(response.data);
-          console.log(response.data);
-          const comments = response.data.map(comment => comment.text);
-          await fetch('/comments', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ comments }),
-          });
+        if (response.data && response.data.length > 0) {
+          const comment = response.data[0].text;
+          console.log("Sending comment to server:", comment);
+          await sendCommentToServer(comment);
         }
       }
     );
   };
-  
+
+  const sendCommentToServer = async (comment) => {
+    try {
+      const response = await axios.post("http://localhost:3000/reply", {
+        comments: [comment],
+      });
+      console.log("Predictions:", response.data);
+    } catch (error) {
+      console.error("Error sending comment to server:", error);
+    }
+  };
 
   const logInToFB = () => {
     window.FB.login(
@@ -182,15 +206,17 @@ function App() {
               </div>
               <div className="d-flex row">
                 <div className="col-12 col-sm-6 text-center text-sm-end">
-                    <h3 className="heading-comments">Comments from your latest post:</h3>
-              </div>
-              <div className="col-12 col-sm-6 text-center text-sm-start">
-              {comments.map((comment, index) => (
-                  <div key={index} className="comment">
-                    {comment.text}
-                  </div>
-                ))}
-              </div>
+                  <h3 className="heading-comments">
+                    Comments from your latest post:
+                  </h3>
+                </div>
+                <div className="col-12 col-sm-6 text-center text-sm-start">
+                  {comments.map((comment, index) => (
+                    <div key={index} className="comment">
+                      {comment.text}
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
