@@ -21,21 +21,21 @@ const connectToMindsDB = async (user) => {
   }
 };
 connectToMindsDB(user);
+console.log('Connected to Mindsdb!')
 
 const getReplyText = async (text) => {
-  const model = await MindsDB.default.Models.getModel("olla", "mindsdb");
+  const model = await MindsDB.default.Models.getModel("olla");
 
-  const queryOptions = {
-    where: [`comment = "${text}"`],
-  };
-
-  const prediction = await model.query(queryOptions);
+  const query = `SELECT * FROM mindsdb.olla WHERE comment = "${text}"`;
+  const prediction = await model.query(query).json;
   return prediction;
 };
 
 // Middleware
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 app.use(cors(({
   origin: "*"
 })));
@@ -47,7 +47,7 @@ app.get("/", function (req, res) {
 
 // Reply route
 app.post("/reply", async function (req, res) {
-  let text = req.body.text;
+  let text = req.body.comment; // Access the comment text from the request body
   try {
     await connectToMindsDB(user);
     let replyMsg = await getReplyText(text);

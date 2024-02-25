@@ -80,55 +80,35 @@ function App() {
       }
     );
   };
-  // const fetchCommentsForMedia = (mediaId, accessToken) => {
-  //   window.FB.api(
-  //     `/${mediaId}/comments`,
-  //     "GET",
-  //     { access_token: accessToken },
-  //     async (response) => {
-  //       if (response.data) {
-  //         setComments(response.data);
-  //         console.log(response.data);
-  //         const comments = response.data.map(comment => comment.text);
-  //         await fetch('/comments', {
-  //           method: 'POST',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //           },
-  //           body: JSON.stringify({ comments }),
-  //         });
-  //       }
-  //     }
-  //   );
-  // };
 
+const fetchCommentsForMedia = (mediaId, accessToken) => {
+  let text = [];
 
-
-  const fetchCommentsForMedia = (mediaId, accessToken) => {
-    window.FB.api(
-      `/${mediaId}/comments`,
-      "GET",
-      { access_token: accessToken },
-      async (response) => {
-        if (response.data && response.data.length > 0) {
-          const comment = response.data[0].text;
-          console.log("Sending comment to server:", comment);
-          await sendCommentToServer(comment);
-        }
+  window.FB.api(
+    `/${mediaId}/comments`,
+    "GET",
+    { access_token: accessToken },
+    async (response) => {
+      if (response.data && response.data.length > 0) {
+        const text = response.data[0].text;
+        console.log(text);
+        console.log("Sending comment to server:", text);
+        await sendCommentToServer(text);
       }
-    );
-  };
-
-  const sendCommentToServer = async (comment) => {
-    try {
-      const response = await axios.post("http://localhost:3000/reply", {
-        comments: [comment],
-      });
-      console.log("Predictions:", response.data);
-    } catch (error) {
-      console.error("Error sending comment to server:", error);
     }
-  };
+  );
+};
+
+const sendCommentToServer = async (comment) => {
+  try {
+    const response = await axios.post("http://localhost:3000/reply", {
+      comment: comment, // Pass the comment text
+    });
+    console.log("Predictions:", response);
+  } catch (error) {
+    console.error("Error sending comment to server:", error);
+  }
+};
 
   const logInToFB = () => {
     window.FB.login(
