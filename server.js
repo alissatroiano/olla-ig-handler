@@ -1,23 +1,20 @@
 const express = require("express");
-const MindsDB = require("mindsdb-js-sdk");
+const MindsDB = require("mindsdb-js-sdk").default;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const axios = require("axios");
-const { query } = require("mindsdb-js-sdk");
-
 const PORT = process.env.PORT || 3000;
 
-const user = process.env.REACT_APP_MINDSDB_USERNAME;
-console.log(user);
+const email = process.env.REACT_APP_MINDSDB_USERNAME;
 const password = process.env.REACT_APP_MINDSDB_PASSWORD;
 
 // Connect to MindsDB
-const connectToMindsDBCloud = async (user, password) => {
+const connectToMindsDBCloud = async (email, password) => {
   try {
     // Create a session with MindsDB Cloud
     const session = await axios.post("https://cloud.mindsdb.com/cloud/login", {
-      user,
+      email,
       password,
     });
 
@@ -29,10 +26,23 @@ const connectToMindsDBCloud = async (user, password) => {
   }
 };
 
-connectToMindsDBCloud(user, password)
+const queryMindsDB = async (comment) => {
+  const model = MindsDB.default.Models.getModel("olla");
+  try {
+    const response = await MindsDB.default.Models.queryModel({
+      query: `SELECT * FROM mindsdb.olla WHERE comment = '${comment}'`,
+    });
+    console.log("Response from MindsDB:", response);
+    return response.data;
+  } catch (error) {
+    console.error("Error querying MindsDB:", error);
+    throw error;
+  }
+};
+
+connectToMindsDBCloud(email, password)
   .then((session) => {
     console.log("Connected to MindsDB Cloud. Session:", session.data);
-    // Proceed with making queries or other actions using the session
   })
   .catch((error) => {
     console.error("Error connecting to MindsDB Cloud:", error);
@@ -49,7 +59,7 @@ const whereClause = "comment = ?";
 const getReplyText = async (text) => {
   try {
     const model = await MindsDB.default.Models.getModel("olla");
-
+    console.log(model);
     const response = await model.query({
       queryOptions: {
         name: "olla",
@@ -60,7 +70,7 @@ const getReplyText = async (text) => {
       params: [text],
     });
 
-    return response.data;
+    console.log(response.data);
   } catch (error) {
     console.error("Error getting reply text from MindsDB:", error);
     throw error;
@@ -73,23 +83,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors()); // Enable CORS for all routes
 
-// Base route
-app.get("/", function (req, res) {
-  return res.json("Hello world!");
-});
-
-// Reply route
 // Reply route
 app.post("/data", async function (req, res) {
   let comment = req.body.comment;
-  console.log("Request queued to send to MindsDB endpoint" + comment);
+  console.log("Received comment:", comment); // Log the received comment
+  console.log("Request queued to send to MindsDB endpoint:", comment);
   try {
-    await connectToMindsDBCloud(user, password);
-    console.log("Connected to MindsDB successfully");
-    let replyMsg = await getReplyText(comment);
-    console.log("Reply received from MindsDB:", replyMsg);
-    let retValue = replyMsg["data"]["reply"];
-    res.json({ reply: retValue });
+    // Query MindsDB with the received comment
+    let reply = await queryMindsDB(comment);
+    res.json({ reply });
   } catch (error) {
     console.log("Error occurred:", error);
     res.status(500).json({ error: "Internal Server Error" });
