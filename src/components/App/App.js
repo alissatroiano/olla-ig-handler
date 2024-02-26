@@ -14,8 +14,8 @@ function App() {
   const [, setFacebookPages] = useState([]);
   const [, setInstagramAccountId] = useState("");
   const [, setMediaList] = useState([]);
-  // eslint-disable-next-line 
-  const [comments, setComments] = useState([]); 
+  // eslint-disable-next-line
+  const [comments, setComments] = useState([]);
   const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
     window.FB.api(
       `/${pageId}`,
@@ -81,34 +81,32 @@ function App() {
     );
   };
 
-const fetchCommentsForMedia = (mediaId, accessToken) => {
-  let text = [];
-
-  window.FB.api(
-    `/${mediaId}/comments`,
-    "GET",
-    { access_token: accessToken },
-    async (response) => {
-      if (response.data && response.data.length > 0) {
-        const text = response.data[0].text;
-        console.log(text);
-        console.log("Sending comment to server:", text);
-        await sendCommentToServer(text);
+  const fetchCommentsForMedia = (mediaId, accessToken) => {
+    window.FB.api(
+      `/${mediaId}/comments`,
+      "GET",
+      { access_token: accessToken },
+      async (response) => {
+        if (response.data && response.data.length > 0) {
+          const text = response.data[0].text;
+          console.log(text);
+          console.log("Sending comment to server:", text);
+          await sendCommentToServer(text);
+        }
       }
-    }
-  );
-};
+    );
+  };
 
-const sendCommentToServer = async (comment) => {
-  try {
-    const response = await axios.post("http://localhost:3000/reply", {
-      comment: comment, // Pass the comment text
-    });
-    console.log("Predictions:", response);
-  } catch (error) {
-    console.error("Error sending comment to server:", error);
-  }
-};
+  const sendCommentToServer = async (comment) => {
+    try {
+      const response = await axios.post("http://localhost:3000/data", {
+        comment: comment,
+      });
+      console.log("Predictions:", response);
+    } catch (error) {
+      console.error("Error sending comment to server:", error);
+    }
+  };
 
   const logInToFB = () => {
     window.FB.login(

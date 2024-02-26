@@ -4,11 +4,11 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const axios = require('axios');
-
 const PORT = process.env.PORT || 3000;
 
+const email = process.env.REACT_APP_MINDSDB_USERNAME;
+const password = process.env.REACT_APP_MINDSDB_PASSWORD;
 
-// Connect to MindsDB
 const connectToMindsDBCloud = async (email, password) => {
   try {
     // Create a session with MindsDB Cloud
@@ -25,22 +25,11 @@ const connectToMindsDBCloud = async (email, password) => {
   }
 };
 
-// Example usage
-const email = process.env.REACT_APP_MINDSDB_USERNAME;
-const password = process.env.REACT_APP_MINDSDB_PASSWORD;
-
-connectToMindsDBCloud(email, password)
-  .then(session => {
-    console.log("Connected to MindsDB Cloud. Session:", session.data);
-    // Proceed with making queries or other actions using the session
-  })
-  .catch(error => {
-    console.error("Error connecting to MindsDB Cloud:", error);
-  });
-
+// Define the function to get reply text from MindsDB
 const getReplyText = async (text) => {
   try {
-    const response = await MindsDB.default.query({
+    // Assuming you have an appropriate API endpoint for predictions
+    const response = await axios.post('https://cloud.mindsdb.com/', {
       query: `SELECT * FROM mindsdb.olla WHERE comment=${text}`
     });
 
@@ -63,12 +52,17 @@ app.get("/", function (req, res) {
 });
 
 // Reply route
-app.post("/data", async function (req, res) {
+app.post("/reply", async function (req, res) {
   let text = req.body.text;
-  console.log("Request queued to send to MindsDB endpoint");
+  console.log(text);
   try {
-    await connectToMindsDBCloud(email, password);
-    console.log("Connected to MindsDB successfully");
+    // Connect to MindsDB Cloud
+    const email = process.env.REACT_APP_MINDSDB_USERNAME;
+    const password = process.env.REACT_APP_MINDSDB_PASSWORD;
+    const session = await connectToMindsDBCloud(email, password);
+    console.log("Connected to MindsDB Cloud. Session:", session.data);
+
+    // Get reply text from MindsDB
     let replyMsg = await getReplyText(text);
     console.log("Reply received from MindsDB:", replyMsg);
     let retValue = replyMsg["data"]["reply"];
@@ -79,7 +73,7 @@ app.post("/data", async function (req, res) {
   }
 });
 
-// Start the Express server
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is listening on port ${PORT}`);
 });

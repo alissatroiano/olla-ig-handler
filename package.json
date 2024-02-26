@@ -35,7 +35,9 @@
     "webpack": "^5.90.3"
   },
   "scripts": {
-    "start": "HTTPS=true PORT=3001 react-scripts start",
+    "start": "concurrently \"HTTPS=true && yarn start:frontend\" \"yarn start:backend\"",
+    "start:frontend": "PORT=3001 react-scripts start",
+    "start:backend": "node server.js",
     "build": "CI=false && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
