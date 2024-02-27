@@ -14,8 +14,11 @@ function App() {
   const [, setFacebookPages] = useState([]);
   const [, setInstagramAccountId] = useState("");
   const [, setMediaList] = useState([]);
+  const [comment, commentId] = useState([]);
   // eslint-disable-next-line
   const [comments, setComments] = useState([]);
+  const [accessToken, setAccessToken] = useState("");
+
   const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
     window.FB.api(
       `/${pageId}`,
@@ -88,26 +91,51 @@ function App() {
       { access_token: accessToken },
       async (response) => {
         if (response.data && response.data.length > 0) {
-          const text = response.data[0].text;
-          console.log(text);
+          const comment = response.data[0];
+          console.log("Comment:", comment);
+          const commentId = comment.id;
+          const text = comment.text;
           console.log("Sending comment to server:", text);
-          await sendCommentToServer(text);
+          await sendCommentToServer(commentId, text);
         }
       }
     );
   };
-
-  const sendCommentToServer = async (comment) => {
+  
+  const sendCommentToServer = async (commentId, comment) => {
     try {
       const response = await axios.post("http://localhost:8080/reply", {
+        commentId: commentId,
         comment: comment,
       });
       console.log("Predictions:", response);
+      const replyMessage = response.data.reply;
+      await postReplyToInstagram(commentId, replyMessage, accessToken);
     } catch (error) {
       console.error("Error sending comment to server:", error);
     }
   };
-
+  
+  const postReplyToInstagram = async (commentId, message, accessToken) => {
+    try {
+      // Use the FB.api method to post a reply to the comment
+      window.FB.api(
+        `/${commentId}/replies`,
+        "POST",
+        { message: message, access_token: accessToken },
+        (response) => {
+          if (response && !response.error) {
+            console.log("Reply posted to Instagram:", response);
+          } else {
+            console.error("Error posting reply to Instagram:", response.error);
+          }
+        }
+      );
+    } catch (error) {
+      console.error("Error posting reply to Instagram:", error);
+    }
+  };
+  
   const logInToFB = () => {
     window.FB.login(
       (response) => {
@@ -182,7 +210,7 @@ function App() {
                   )}
                 </div>
               </div>
-              <div className="d-flex row">
+              <div className="d-flex row">    
                 <div className="col-12 col-sm-6 text-center text-sm-end">
                   <h3 className="heading-comments">
                     Comments from your latest post:
