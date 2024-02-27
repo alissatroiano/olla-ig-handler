@@ -6,10 +6,13 @@ env.py
 config.js
 .env
 olla/
+backend/.env
 
 # dependencies
 /node_modules
 package-lock.json
+backend/node_modules
+backend/package-lock.json
 
 # misc
 .DS_Store

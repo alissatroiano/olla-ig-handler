@@ -99,7 +99,7 @@ function App() {
 
   const sendCommentToServer = async (comment) => {
     try {
-      const response = await axios.post("http://localhost:3000/data", {
+      const response = await axios.post("http://localhost:8080/reply", {
         comment: comment,
       });
       console.log("Predictions:", response);

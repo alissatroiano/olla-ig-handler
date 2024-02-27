@@ -17,8 +17,6 @@ const connectToMindsDBCloud = async (email, password) => {
       email,
       password,
     });
-
-    // Return the session for further use
     return session;
   } catch (error) {
     console.error("Error connecting to MindsDB Cloud:", error);
@@ -27,7 +25,8 @@ const connectToMindsDBCloud = async (email, password) => {
 };
 
 const queryMindsDB = async (comment) => {
-  const model = MindsDB.default.Models.getModel("olla");
+  let myModels = MindsDB.default.Models.getAllModels;
+  
   try {
     const response = await MindsDB.default.Models.queryModel({
       query: `SELECT * FROM mindsdb.olla WHERE comment = '${comment}'`,
@@ -89,8 +88,9 @@ app.post("/data", async function (req, res) {
   console.log("Received comment:", comment); // Log the received comment
   console.log("Request queued to send to MindsDB endpoint:", comment);
   try {
-    // Query MindsDB with the received comment
-    let reply = await queryMindsDB(comment);
+    const reply = await MindsDB.default.Models.queryModel({
+      query: `SELECT * FROM mindsdb.olla WHERE comment = '${comment}'`,
+    });
     res.json({ reply });
   } catch (error) {
     console.log("Error occurred:", error);

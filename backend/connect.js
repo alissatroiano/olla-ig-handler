@@ -1,81 +1,88 @@
 const express = require("express");
-const MindsDB = require("mindsdb-js-sdk");
-const cors = require("cors");
 const bodyParser = require("body-parser");
-require("dotenv").config();
-const axios = require('axios');
-const PORT = process.env.PORT || 3000;
+const dotenv = require("dotenv");
+const cors = require("cors");
 
-const email = process.env.REACT_APP_MINDSDB_USERNAME;
-const password = process.env.REACT_APP_MINDSDB_PASSWORD;
+const MindsDB = require("mindsdb-js-sdk");
+dotenv.config({ path: '.env' });
 
-const connectToMindsDBCloud = async (email, password) => {
-  try {
-    // Create a session with MindsDB Cloud
-    const session = await axios.post('https://cloud.mindsdb.com/cloud/login', {
-      email,
-      password
-    });
-
-    // Return the session for further use
-    return session;
-  } catch (error) {
-    console.error("Error connecting to MindsDB Cloud:", error);
-    throw error;
-  }
+const user = {
+  user: process.env.MINDSDB_USERNAME,
+  password: process.env.MINDSDB_PASSWORD,
 };
 
-// Define the function to get reply text from MindsDB
-const getReplyText = async (text) => {
-  try {
-    // Assuming you have an appropriate API endpoint for predictions
-    const response = await axios.post('https://cloud.mindsdb.com/', {
-      query: `SELECT * FROM mindsdb.olla WHERE comment=${text}`
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error("Error getting reply text from MindsDB:", error);
-    throw error;
-  }
+const connectToMindsDB = async (user) => {
+  await MindsDB.default.connect(user);
+  console.log('Connected!');
 };
 
-// Middleware
+const getReplyData = async (text) => {
+	const model = await MindsDB.default.Models.getModel(
+		"olla",
+		"mindsdb"
+	);
+
+	const queryOptions = {
+		where: [`comment = "Hey girl. I think you are so cool! Please be my friend"`],
+	};
+
+	const prediction = await model.query(queryOptions);
+	return prediction;
+};
+
+// Express API setup
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
 app.use(bodyParser.json());
-app.use(cors()); // Enable CORS for all routes
+
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Origin: *",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  next();
+});
 
 // Base route
 app.get("/", function (req, res) {
   return res.json("Hello world!");
 });
 
-// Reply route
+// Text summarisation route
 app.post("/reply", async function (req, res) {
   let text = req.body.text;
-  console.log(text);
   try {
-    // Connect to MindsDB Cloud
-    const email = process.env.REACT_APP_MINDSDB_USERNAME;
-    const password = process.env.REACT_APP_MINDSDB_PASSWORD;
-    const session = await connectToMindsDBCloud(email, password);
-    console.log("Connected to MindsDB Cloud. Session:", session.data);
-
-    // Get reply text from MindsDB
-    let replyMsg = await getReplyText(text);
-    console.log("Reply received from MindsDB:", replyMsg);
-    let retValue = replyMsg["data"]["reply"];
+    await connectToMindsDB(user);
+    let replyText = await getReplyData(text);
+    let retValue = replyText["data"]["reply"];
     res.json({ reply: retValue });
+    console.log(retValue);
   } catch (error) {
-    console.log("Error occurred:", error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.log(`Error: ${error}`);
+    res.json(error);
   }
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}`);
+// Run the API
+const port = 8080;
+app.listen(port, () => {
+  console.log(`Listening at Port ${port}`);
 });
 
 module.exports = app;
