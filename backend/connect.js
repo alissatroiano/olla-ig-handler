@@ -16,14 +16,14 @@ const connectToMindsDB = async (user) => {
   console.log('Connected!');
 };
 
-const getReplyData = async (text) => {
+const getReplyData = async (comment) => {
 	const model = await MindsDB.default.Models.getModel(
 		"olla",
 		"mindsdb"
 	);
 
 	const queryOptions = {
-		where: [`comment = "Hey girl. I think you are so cool! Please be my friend"`],
+		where: [`comment = "${comment}"`],
 	};
 
 	const prediction = await model.query(queryOptions);
@@ -66,10 +66,11 @@ app.get("/", function (req, res) {
 
 // Text summarisation route
 app.post("/reply", async function (req, res) {
-  let text = req.body.text;
+  let comment = req.body.comment;
+  console.log(comment);
   try {
     await connectToMindsDB(user);
-    let replyText = await getReplyData(text);
+    let replyText = await getReplyData(comment);
     let retValue = replyText["data"]["reply"];
     res.json({ reply: retValue });
     console.log(retValue);
