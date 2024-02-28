@@ -1,34 +1,11 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const dotenv = require("dotenv");
-const cors = require("cors");
-
-const MindsDB = require("mindsdb-js-sdk");
+import express from 'express'
+import bodyParser from 'body-parser'
+import  cors from 'cors'
+import MindsDB from 'mindsdb-js-sdk'
+import dotenv from 'dotenv'; 
 dotenv.config({ path: '.env' });
 
-const user = {
-  user: process.env.MINDSDB_USERNAME,
-  password: process.env.MINDSDB_PASSWORD,
-};
-
-const connectToMindsDB = async (user) => {
-  await MindsDB.default.connect(user);
-  console.log('Connected!');
-};
-
-const getReplyData = async (comment) => {
-	const model = await MindsDB.default.Models.getModel(
-		"olla",
-		"mindsdb"
-	);
-
-	const queryOptions = {
-		where: [`comment = "${comment}"`],
-	};
-
-	const prediction = await model.query(queryOptions);
-	return prediction;
-};
+import { router as reply } from './routes/reply.js'
 
 // Express API setup
 const app = express();
@@ -59,25 +36,24 @@ app.use(function (req, res, next) {
   next();
 });
 
+const user = {
+  user: process.env.MINDSDB_USERNAME,
+  password: process.env.MINDSDB_PASSWORD,
+};
+
+const connectToMindsDB = async (user) => {
+  await MindsDB.default.connect(user);
+  console.log('Connected!');
+};
+connectToMindsDB(user);
+
+
+app.use('/reply', reply);
+
+
 // Base route
 app.get("/", function (req, res) {
   return res.json("Hello world!");
-});
-
-// Text summarisation route
-app.post("/reply", async function (req, res) {
-  let comment = req.body.comment;
-  console.log(comment);
-  try {
-    await connectToMindsDB(user);
-    let replyText = await getReplyData(comment);
-    let retValue = replyText["data"]["reply"];
-    res.json({ reply: retValue });
-    console.log(retValue);
-  } catch (error) {
-    console.log(`Error: ${error}`);
-    res.json(error);
-  }
 });
 
 // Run the API
@@ -85,5 +61,3 @@ const port = 8080;
 app.listen(port, () => {
   console.log(`Listening at Port ${port}`);
 });
-
-module.exports = app;
