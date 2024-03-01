@@ -2,19 +2,23 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
-
 const MindsDB = require("mindsdb-js-sdk");
 dotenv.config({ path: '.env' });
+const PORT = process.env.PORT || 8080;
 
 const user = {
-  user: process.env.MINDSDB_USERNAME,
-  password: process.env.MINDSDB_PASSWORD,
+  user: process.env.MINDSDB_USER,
+  password: process.env.MINDSDB_PASS
 };
-
 const connectToMindsDB = async (user) => {
   await MindsDB.default.connect(user);
   console.log('Connected!');
 };
+connectToMindsDB(user);
+
+// Express API setup
+const app = express();
+app.use(express.static('build'));
 
 const getReplyData = async (comment) => {
 	const model = await MindsDB.default.Models.getModel(
@@ -30,8 +34,6 @@ const getReplyData = async (comment) => {
 	return prediction;
 };
 
-// Express API setup
-const app = express();
 app.use(
   cors({
     origin: "*",
@@ -81,9 +83,8 @@ app.post("/reply", async function (req, res) {
 });
 
 // Run the API
-const port = 8080;
-app.listen(port, () => {
-  console.log(`Listening at Port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Listening at Port ${PORT}`);
 });
 
 module.exports = app;

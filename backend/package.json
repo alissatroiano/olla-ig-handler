@@ -6,6 +6,10 @@
       "express": "^4.18.2",
       "express-async-handler": "^1.2.0",
       "mindsdb-js-sdk": "^2.2.0"
+    },
+    "scripts": {
+      "start": "node connect.js",
+      "dev": "nodemon app"
     }
   }
   

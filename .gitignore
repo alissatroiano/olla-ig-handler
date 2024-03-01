@@ -6,7 +6,10 @@ env.py
 config.js
 .env
 olla/
+backend/.back-env
 backend/.env
+backend/node_modules
+mdb/
 
 # dependencies
 /node_modules
