@@ -1,15 +1,28 @@
 {
-    "dependencies": {
-      "body-parser": "^1.20.2",
-      "cors": "^2.8.5",
-      "dotenv": "^16.0.3",
-      "express": "^4.18.2",
-      "express-async-handler": "^1.2.0",
-      "mindsdb-js-sdk": "^2.2.0"
-    },
-    "scripts": {
-      "start": "node connect.js",
-      "dev": "nodemon app"
-    }
-  }
-  
+  "private": true,
+  "homepage": ".",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "mindsdb-js-sdk": "^2.2.0"
+  },
+  "scripts": {
+    "start": "node connect.js && serve -s build",
+    "dev": "nodemon app",
+    "build": "netlify deploy --prod"
+  },
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "connect.js",
+  "devDependencies": {
+    "netlify-cli": "^17.17.1",
+    "netlify-lambda": "^2.0.16",
+    "serverless-http": "^3.2.0"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
