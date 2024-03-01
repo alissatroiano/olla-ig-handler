@@ -91,16 +91,15 @@ function App() {
       { access_token: accessToken },
       async (response) => {
         if (response.data && response.data.length > 0) {
-          const comment = response.data[0];
-          console.log("Comment:", comment);
-          const commentId = comment.id;
-          const text = comment.text;
-          console.log("Sending comment to server:", text);
-          await sendCommentToServer(commentId, text);
+          const latestComment = response.data[0]; // Get the latest comment
+          const replyMessage = await sendCommentToServer(latestComment.id, latestComment.text);
+          const commentWithReply = { ...latestComment, reply: replyMessage };
+          setComments([commentWithReply]);
         }
       }
     );
   };
+  
   
   const sendCommentToServer = async (commentId, comment) => {
     try {
@@ -109,10 +108,10 @@ function App() {
         comment: comment,
       });
       console.log("Predictions:", response);
-      const replyMessage = response.data.reply;
-      await postReplyToInstagram(commentId, replyMessage, accessToken);
+      return response.data.reply; // Return the reply message
     } catch (error) {
       console.error("Error sending comment to server:", error);
+      return null;
     }
   };
   
@@ -125,7 +124,8 @@ function App() {
         { message: message, access_token: accessToken },
         (response) => {
           if (response && !response.error) {
-            console.log("Reply posted to Instagram:", response);
+            const reply = response;
+            console.log("Reply posted to Instagram:", reply);
           } else {
             console.error("Error posting reply to Instagram:", response.error);
           }
@@ -135,7 +135,7 @@ function App() {
       console.error("Error posting reply to Instagram:", error);
     }
   };
-  
+
   const logInToFB = () => {
     window.FB.login(
       (response) => {
@@ -193,7 +193,7 @@ function App() {
                         className="icon me-2"
                         icon={["fab", "facebook"]}
                       />
-                      Log out BITCH
+                      Log out
                     </button>
                   ) : (
                     <button
@@ -210,7 +210,7 @@ function App() {
                   )}
                 </div>
               </div>
-              <div className="d-flex row">    
+              <div className="d-flex row">
                 <div className="col-12 col-sm-6 text-center text-sm-end">
                   <h3 className="heading-comments">
                     Comments from your latest post:
@@ -219,7 +219,12 @@ function App() {
                 <div className="col-12 col-sm-6 text-center text-sm-start">
                   {comments.map((comment, index) => (
                     <div key={index} className="comment">
-                      {comment.text}
+                      <div>{comment.text}</div>
+                      {comment.reply && ( // Check if a reply exists
+                        <div className="reply">
+                          <strong>Reply:</strong> {comment.reply}
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>

@@ -4,12 +4,16 @@ olla-env
 venv/
 env.py
 config.js
+node_modules
 .env
 olla/
 backend/.back-env
 backend/.env
 backend/node_modules
 mdb/
+src/
+public/
+
 
 # dependencies
 /node_modules
@@ -22,6 +26,3 @@ backend/package-lock.json
 olla_ig/.DS_Store
 test_scripts/__pycache__
 __pycache__
-
-# Local Netlify folder
-.netlify
