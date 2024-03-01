@@ -1,4 +1,3 @@
-
 {
   "private": true,
   "homepage": ".",
@@ -11,13 +10,18 @@
     "mindsdb-js-sdk": "^2.2.0"
   },
   "scripts": {
-    "start": "node connect.js && yarn start",
-    "dev": "nodemon app"
+    "start": "node connect.js && serve -s build",
+    "dev": "nodemon app",
+    "build": "netlify deploy --prod"
   },
   "name": "backend",
   "version": "1.0.0",
   "main": "connect.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "netlify-cli": "^17.17.1",
+    "netlify-lambda": "^2.0.16",
+    "serverless-http": "^3.2.0"
+  },
   "author": "",
   "license": "ISC",
   "description": ""
