@@ -10,7 +10,7 @@
     "mindsdb-js-sdk": "^2.2.0"
   },
   "scripts": {
-    "start": "node connect.js && serve -s build",
+    "start": "serve build && node api.js",
     "dev": "nodemon app",
     "build": "netlify deploy --prod"
   },
