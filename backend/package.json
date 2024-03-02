@@ -9,7 +9,7 @@
     },
     "scripts": {
       "start": "node connect.js",
-      "dev": "nodemon app"
+      "dev": "nodemon connect.js"
     }
   }
   
