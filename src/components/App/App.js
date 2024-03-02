@@ -193,7 +193,7 @@ function App() {
                         className="icon me-2"
                         icon={["fab", "facebook"]}
                       />
-                      Log out BITCH
+                      Log out
                     </button>
                   ) : (
                     <button
