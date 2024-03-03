@@ -12,12 +12,9 @@ export default async (req, context) => {
     console.log("Connected!");
   };
   connectToMindsDB(user);
-
   // Express API setup
   const app = express();
-
   app.use(express.static("build"));
-
   const getReplyData = async (comment) => {
     const model = await MindsDB.default.Models.getModel("olla", "mindsdb");
 
@@ -28,39 +25,6 @@ export default async (req, context) => {
     const prediction = await model.query(queryOptions);
     return prediction;
   };
-
-  app.use(
-    cors({
-      origin: "*",
-    })
-  );
-  app.use(
-    bodyParser.urlencoded({
-      extended: false,
-    })
-  );
-  app.use(bodyParser.json());
-  app.use(function (req, res, next) {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-      "Access-Control-Allow-Methods",
-      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-    );
-    res.setHeader(
-      "Access-Control-Allow-Headers",
-      "Access-Control-Allow-Origin: *",
-      "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
-    );
-    next();
-  });
-
-  app.set("trust proxy", 1);
-
-  // Base route
-  app.get("/", function (req, res) {
-    return res.json("Hello world!");
-  });
-
   // Text summarisation route
   app.post("/reply", async function (req, res) {
     let comment = req.body.comment;
@@ -77,3 +41,6 @@ export default async (req, context) => {
     }
   });
 };
+
+export const handler = serverless(app);
+
