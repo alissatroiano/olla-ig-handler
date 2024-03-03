@@ -105,7 +105,7 @@ function App() {
 
   const sendCommentToServer = async (commentId, comment) => {
     try {
-      const response = await axios.post("http://localhost:8080/reply", {
+      const response = await axios.post("https://ollagram.netlify.app/reply", {
         commentId: commentId,
         comment: comment,
       });

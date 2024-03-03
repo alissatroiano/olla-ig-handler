@@ -63,7 +63,7 @@ app.use(function (req, res, next) {
 
 // Base route
 app.get("/", function (req, res) {
-  return res.json("Hello world!");
+  res.render('build');
 });
 
 // Text summarisation route
