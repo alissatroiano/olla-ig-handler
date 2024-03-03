@@ -5,7 +5,7 @@ const cors = require("cors");
 const MindsDB = require("mindsdb-js-sdk");
 dotenv.config({ path: ".env" });
 const path = require('path')
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 const buildPath = path.join(__dirname, 'build')
 
 const user = {
@@ -62,12 +62,6 @@ app.use(express.static(buildPath))
 app.get('*', (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'))
 })
-
-
-// Base route
-app.get("/", function (req, res) {
-  return res.json("Hello world!");
-});
 
 // Text summarisation route
 app.post("/reply", async function (req, res) {
