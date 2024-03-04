@@ -136,7 +136,7 @@ function App() {
       },
       {
         scope:
-          "instagram_basic, pages_show_list, instagram_content_publish, instagram_manage_comments, instagram_manage_insights,pages_read_engagement, pages_manage_metadata",
+          "instagram_basic, pages_show_list, instagram_content_publish, instagram_manage_comments, instagram_manage_insights,pages_read_engagement, pages_manage_metadata, pages_read_user_content, pages_manage_posts",
       }
     );
   };
