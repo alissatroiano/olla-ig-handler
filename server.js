@@ -4,9 +4,10 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const MindsDB = require("mindsdb-js-sdk");
 dotenv.config({ path: ".env" });
-const path = require('path')
+const path = require("path");
 const PORT = process.env.PORT || 3000;
-const buildPath = path.join(__dirname, 'build')
+const buildPath = path.join(__dirname, "build");
+const rateLimit = require('express-rate-limit');
 
 const user = {
   user: process.env.MINDSDB_USER,
@@ -57,13 +58,20 @@ app.use(function (req, res, next) {
   );
   next();
 });
-app.use(express.static(buildPath))
+app.use(express.static(buildPath));
 // gets the static files from the build folder
-app.get('*', (req, res) => {
-  res.sendFile(path.join(buildPath, 'index.html'))
-})
+app.get("*", (req, res) => {
+  res.sendFile(path.join(buildPath, "index.html"));
+});
 
-// Text summarisation route
+const limiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour window
+  max: 60, // 60 requests per windowMs
+  message: "Too many requests from this IP, please try again later",
+});
+
+app.use("/reply", limiter); 
+// Your existing route handler
 app.post("/reply", async function (req, res) {
   let comment = req.body.comment;
   console.log(comment);
