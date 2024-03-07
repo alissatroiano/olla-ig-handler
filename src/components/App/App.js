@@ -83,6 +83,7 @@ function App() {
       }
     );
   };
+
   const fetchCommentsForMedia = (mediaId, accessToken) => {
     window.FB.api(
       `/${mediaId}/comments`,
@@ -91,10 +92,12 @@ function App() {
       async (response) => {
         if (response.data && response.data.length > 0) {
           const latestComment = response.data[0]; // Get the latest comment
-          setComments((prevComments) => [latestComment, ...prevComments]); // Update state with the latest comment
-
-          // Send the latest comment to the server for a reply
-          sendCommentToServer(latestComment.id, latestComment.text);
+          const replyMessage = await sendCommentToServer(
+            latestComment.id,
+            latestComment.text
+          );
+          const commentWithReply = { ...latestComment, reply: replyMessage };
+          setComments([commentWithReply]);
         }
       }
     );
@@ -102,28 +105,36 @@ function App() {
 
   const sendCommentToServer = async (commentId, comment) => {
     try {
-      const response = await axios.post(
-        "https://olla-onboard.onrender.com/reply",
-        {
-          commentId: commentId,
-          comment: comment,
-        }
-      );
-
-      // Once the reply is received, update the state with the reply message
-      const replyMessage = response.data.reply;
-      updateCommentWithReply(commentId, replyMessage);
+      const response = await axios.post("https://olla-onboard.onrender.com/reply", {
+        commentId: commentId,
+        comment: comment,
+      });
+      console.log("Predictions:", response);
+      return response.data.reply; // Return the reply message
     } catch (error) {
       console.error("Error sending comment to server:", error);
+      return null;
     }
   };
 
-  const updateCommentWithReply = (commentId, replyMessage) => {
-    setComments((prevComments) =>
-      prevComments.map((comment) =>
-        comment.id === commentId ? { ...comment, reply: replyMessage } : comment
-      )
-    );
+  const postReplyToInstagram = async (commentId, message, accessToken) => {
+    try {
+      // Use the FB.api method to post a reply to the comment
+      window.FB.api(
+        `/${commentId}/replies`,
+        "POST",
+        { message: message, access_token: accessToken },
+        (response) => {
+          if (response && !response.error) {
+            console.log("Reply posted to Instagram:", response);
+          } else {
+            console.error("Error posting reply to Instagram:", response.error);
+          }
+        }
+      );
+    } catch (error) {
+      console.error("Error posting reply to Instagram:", error);
+    }
   };
 
   const logInToFB = () => {
@@ -136,7 +147,7 @@ function App() {
       },
       {
         scope:
-          "instagram_basic, pages_show_list, instagram_content_publish, instagram_manage_comments, instagram_manage_insights,pages_read_engagement, pages_manage_metadata, pages_read_user_content, pages_manage_posts",
+          "instagram_basic,pages_show_list, instagram_content_publish, business_management,instagram_manage_comments, instagram_manage_insights, instagram_manage_messages,pages_read_engagement, pages_manage_metadata, pages_read_user_content, pages_manage_posts",
       }
     );
   };
@@ -212,10 +223,7 @@ function App() {
                       <div>{comment.text}</div>
                       {comment.reply && ( // Check if a reply exists
                         <div className="reply">
-                          <strong>
-                            Success! Reply Added to Instagram:
-                          </strong>
-                          {comment.reply}
+                          <strong>Reply:</strong> {comment.reply}
                         </div>
                       )}
                     </div>
