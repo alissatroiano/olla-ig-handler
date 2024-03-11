@@ -105,10 +105,13 @@ function App() {
 
   const sendCommentToServer = async (commentId, comment) => {
     try {
-      const response = await axios.post("https://olla-onboard.onrender.com/reply", {
-        commentId: commentId,
-        comment: comment,
-      });
+      const response = await axios.post(
+        "https://olla-onboard.onrender.com/reply",
+        {
+          commentId: commentId,
+          comment: comment,
+        }
+      );
       console.log("Predictions:", response);
       return response.data.reply; // Return the reply message
     } catch (error) {
@@ -147,7 +150,7 @@ function App() {
       },
       {
         scope:
-          "instagram_basic,pages_show_list, instagram_content_publish, business_management,instagram_manage_comments, instagram_manage_insights, instagram_manage_messages,pages_read_engagement, pages_manage_metadata, pages_read_user_content, pages_manage_posts",
+          "instagram_basic, pages_show_list, business_management,instagram_manage_comments, pages_read_engagement, pages_manage_metadata",
       }
     );
   };
