@@ -150,7 +150,7 @@ function App() {
       },
       {
         scope:
-          "instagram_basic, instagram_manage_comments",
+          "pages_show_list, pages_read_engagement, instagram_basic, instagram_manage_comments, business_management, pages_manage_metadata",
       }
     );
   };
