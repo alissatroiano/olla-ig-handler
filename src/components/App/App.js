@@ -14,7 +14,9 @@ function App() {
   const [, setFacebookPages] = useState([]);
   const [, setInstagramAccountId] = useState("");
   const [, setMediaList] = useState([]);
-  const [comment, commentId] = useState([]);
+  const [comment, setComment] = useState("");
+  const [commentIdentifier, setCommentIdentifier] = useState("");
+  const [reply, setReply] = useState("");
   // eslint-disable-next-line
   const [comments, setComments] = useState([]);
   const [accessToken, setAccessToken] = useState("");
@@ -91,32 +93,29 @@ function App() {
       { access_token: accessToken },
       async (response) => {
         if (response.data && response.data.length > 0) {
-          const latestComment = response.data[0]; // Get the latest comment
-          const replyMessage = await sendCommentToServer(
-            latestComment.id,
-            latestComment.text
-          );
-          const commentWithReply = { ...latestComment, reply: replyMessage };
-          setComments([commentWithReply]);
+          const mostRecentComment = response.data[0];
+          setComment(mostRecentComment.text);
+          setCommentIdentifier(mostRecentComment.id); // Update comment identifier
+          // Send the comment to the server and await reply
+          await sendCommentToServer(mostRecentComment.id, mostRecentComment.text);
         }
       }
     );
   };
-
-  const sendCommentToServer = async (commentId, comment) => {
+  
+  // Function to send comment to server
+  const sendCommentToServer = async (commentId, commentText) => {
     try {
-      const response = await axios.post(
-        "https://olla-onboard.onrender.com/reply",
-        {
-          commentId: commentId,
-          comment: comment,
-        }
-      );
+      const response = await axios.post("https://olla-onboard.onrender.com/reply", {
+        commentId: commentId,
+        comment: commentText,
+      });
       console.log("Predictions:", response);
-      return response.data.reply; // Return the reply message
+      const replyMessage = response.data.reply;
+      setReply(replyMessage);
+      await postReplyToInstagram(commentId, replyMessage, accessToken);
     } catch (error) {
       console.error("Error sending comment to server:", error);
-      return null;
     }
   };
 
@@ -221,16 +220,14 @@ function App() {
                   </h3>
                 </div>
                 <div className="col-12 col-sm-6 text-center text-sm-start">
-                  {comments.map((comment, index) => (
-                    <div key={index} className="comment">
-                      <div>{comment.text}</div>
-                      {comment.reply && ( // Check if a reply exists
-                        <div className="reply">
-                          <strong>Reply:</strong> {comment.reply}
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                  <div className="comment">
+                    <div>{comment}</div> {/* Display the comment */}
+                    {reply && ( // Display the reply if available
+                      <div className="reply">
+                        <strong>Reply:</strong> {reply}
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
