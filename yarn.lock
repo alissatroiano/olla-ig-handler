@@ -1688,6 +1688,35 @@
   resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
+"@ngrok/ngrok-darwin-universal@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@ngrok/ngrok-darwin-universal/-/ngrok-darwin-universal-1.2.0.tgz"
+  integrity sha512-z5srpqZjQKomLBsY/b2Oc44V4BqIqE7Tn3YdsN3ucZg4yH9aFTHLiD2Ioubb/8u48mRvwsT9FqFTGlswWA8dew==
+
+"@ngrok/ngrok-darwin-x64@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@ngrok/ngrok-darwin-x64/-/ngrok-darwin-x64-1.2.0.tgz"
+  integrity sha512-EkH2qFoXyaZkLn2Nw5NvK1F6T3332xzTVXeJMF/oLme2K567rRHmFUfN9mUORm1snHO+Ct/uW9Tciz6+hlyTLg==
+
+"@ngrok/ngrok@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@ngrok/ngrok/-/ngrok-1.2.0.tgz"
+  integrity sha512-KOM7lHTKzsQ8IQewgigOGynJKHQRt3z0lHyEgK63H2wq9tI47tWlxWYmrQoqWLcvPgP2JA24nXWeMf/ZE2BaZg==
+  optionalDependencies:
+    "@ngrok/ngrok-android-arm-eabi" "1.2.0"
+    "@ngrok/ngrok-android-arm64" "1.2.0"
+    "@ngrok/ngrok-darwin-arm64" "1.2.0"
+    "@ngrok/ngrok-darwin-universal" "1.2.0"
+    "@ngrok/ngrok-darwin-x64" "1.2.0"
+    "@ngrok/ngrok-freebsd-x64" "1.2.0"
+    "@ngrok/ngrok-linux-arm-gnueabihf" "1.2.0"
+    "@ngrok/ngrok-linux-arm64-gnu" "1.2.0"
+    "@ngrok/ngrok-linux-arm64-musl" "1.2.0"
+    "@ngrok/ngrok-linux-x64-gnu" "1.2.0"
+    "@ngrok/ngrok-linux-x64-musl" "1.2.0"
+    "@ngrok/ngrok-win32-ia32-msvc" "1.2.0"
+    "@ngrok/ngrok-win32-x64-msvc" "1.2.0"
+
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
   resolved "https://registry.npmjs.org/@nicolo-ribaudo/eslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz"

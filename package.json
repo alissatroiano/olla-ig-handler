@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.16.7",
+    "@ngrok/ngrok": "^1.2.0",
     "axios": "^1.6.7",
     "body-parser": "^1.20.2",
     "concurrently": "^8.2.2",
@@ -41,7 +42,7 @@
     "webpack": "^5.90.3"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

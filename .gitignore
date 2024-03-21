@@ -5,11 +5,14 @@ venv/
 env.py
 config.js
 .env
+src/.env
 olla/
 backend/.back-env
 backend/.env
 backend/node_modules
 mdb/
+private-key.pem
+certificate.pem
 
 # dependencies
 /node_modules
@@ -23,5 +26,3 @@ olla_ig/.DS_Store
 test_scripts/__pycache__
 __pycache__
 
-# Local Netlify folder
-.netlify
