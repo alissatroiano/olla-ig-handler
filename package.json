@@ -30,6 +30,7 @@
     "@ngrok/ngrok": "^1.2.0",
     "axios": "^1.6.7",
     "body-parser": "^1.20.2",
+    "bootstrap": "^5.3.3",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -39,6 +40,7 @@
     "mindsdb-js-sdk": "^2.3.0",
     "pactum": "^3.6.0",
     "path": "^0.12.7",
+    "react-bootstrap": "^2.10.2",
     "webpack": "^5.90.3"
   },
   "scripts": {

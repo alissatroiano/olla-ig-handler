@@ -5,8 +5,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../Logo/Logo";
+import NavbarNav from "../Navbar/Navbar";
 import axios from "axios";
-
 library.add(fab);
 
 function App() {
@@ -203,6 +203,7 @@ function App() {
 
   return (
     <div className="App">
+      <NavbarNav />
       <div className="container-fluid">
         <div className="row text-center d-flex justify-content-center align-items-center my-0 mx-auto">
           <div className="appWrapper py-5">
