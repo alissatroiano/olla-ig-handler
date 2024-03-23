@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback, useRef } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import initFacebookSDK from "../../initFacebookSDK";
 import "./App.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../Logo/Logo";
 import NavbarNav from "../Navbar/Navbar";
 import axios from "axios";
+const cors = require("cors");
+
 library.add(fab);
 
 function App() {
@@ -16,14 +18,9 @@ function App() {
   const [, setMediaList] = useState([]);
   const [comment, setComment] = useState("");
   const [reply, setReply] = useState("");
-  const [repliedComments, setRepliedComments] = useState([]);
+  const [commentIdentifier, setCommentIdentifier] = useState("");
   const [accessToken, setAccessToken] = useState("");
-  const commentIdRef = useRef(null);
-
-  useEffect(() => {
-    console.log("Updated repliedComments:", repliedComments);
-  }, [repliedComments]);
-
+  // const commentIdRef = useRef(null);
   const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
     window.FB.api(
       `/${pageId}`,
@@ -97,58 +94,32 @@ function App() {
       async (response) => {
         if (response.data && response.data.length > 0) {
           const mostRecentComment = response.data[0];
-          const commentId = mostRecentComment.id;
-          // Check if the commentId has already been replied to
-          if (repliedComments.includes(commentId)) {
-            setComment(mostRecentComment.text);
-            // Set the commentId using the useRef hook
-            commentIdRef.current = commentId;
-            await sendCommentToServer(commentId, mostRecentComment.text);
-          }
+          setComment(mostRecentComment.text);
+          setCommentIdentifier(mostRecentComment.id); // Update comment identifier
+          // Send the comment to the server and await reply
+          await sendCommentToServer(
+            mostRecentComment.id,
+            mostRecentComment.text
+          );
         }
       }
     );
   };
-  
-  useEffect(() => {
-    // Check if there are any replied comments stored in local storage
-    const storedRepliedComments = localStorage.getItem("repliedComments");
-    if (storedRepliedComments) {
-      setRepliedComments(JSON.parse(storedRepliedComments));
-    }
-  }, []);
 
+  // Function to send comment to server
   const sendCommentToServer = async (commentId, commentText) => {
     try {
-      // Check if the commentId has already been replied to
-      if (
-        !repliedComments.includes(commentId) &&
-        commentId === commentIdRef.current
-      ) {
-        const response = await axios.post("http://localhost:8080/reply", {
+      const response = await axios.post(
+        "https://olla-onboard.onrender.com/reply",
+        {
           commentId: commentId,
           comment: commentText,
-        });
-        console.log("Predictions:", response);
-        const replyMessage = response.data.reply;
-        setReply(replyMessage);
-
-        // Update the repliedComments array with the new commentId
-        const updatedRepliedComments = [...repliedComments, commentId];
-        setRepliedComments(updatedRepliedComments);
-        localStorage.setItem(
-          "repliedComments",
-          JSON.stringify(updatedRepliedComments)
-        ); // Store replied comments in local storage
-
-        // Post the reply to Instagram
-        await postReplyToInstagram(commentId, replyMessage, accessToken);
-      } else {
-        console.log(
-          "Already replied to this comment or not the current user's comment:",
-          commentId
-        );
-      }
+        }
+      );
+      console.log("Predictions:", response);
+      const replyMessage = response.data.reply;
+      setReply(replyMessage);
+      await postReplyToInstagram(commentId, replyMessage, accessToken);
     } catch (error) {
       console.error("Error sending comment to server:", error);
     }
@@ -156,15 +127,9 @@ function App() {
 
   const postReplyToInstagram = async (commentId, message, accessToken) => {
     try {
-      // Check if the commentId has already been replied to
-      if (repliedComments.includes(commentId)) {
-        console.log("Already replied to this comment:", commentId);
-        return; // Exit early if already replied
-      }
-
       // Use the FB.api method to post a reply to the comment
       window.FB.api(
-        `https://graph.facebook.com/${commentId}/replies`,
+        `/${commentId}/replies`,
         "POST",
         { message: message, access_token: accessToken },
         (response) => {
@@ -175,7 +140,6 @@ function App() {
           }
         }
       );
-      setRepliedComments([...repliedComments, commentId]);
     } catch (error) {
       console.error("Error posting reply to Instagram:", error);
     }
