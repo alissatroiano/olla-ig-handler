@@ -35,13 +35,15 @@
     z-index: 1000;
 }
 
-.logoImg img {
-    width: 80px;
-    height: auto;
-}
 
-.logoImg {
-    margin: 10px 0 20px 0;
+img.logoImg {
+    max-width: 110px;
+     height: auto;
+     margin: 10px 0;
+ }
+
+a.navbar-brand img.logoImg {
+    max-width: 50px;
 }
 
 h1.title {
@@ -210,8 +212,8 @@ button#logoutBtn {
         font-weight: 400;
     }
 
-    .logoImg img {
-        width: 110px;
+    img.logoImg {
+       max-width: 110px;
         height: auto;
     }
 
