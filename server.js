@@ -5,7 +5,7 @@ const cors = require("cors");
 const MindsDB = require("mindsdb-js-sdk");
 dotenv.config({ path: ".env" });
 const path = require("path");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 const buildPath = path.join(__dirname, "build");
 const rateLimit = require('express-rate-limit');
 
