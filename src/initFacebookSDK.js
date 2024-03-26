@@ -1,4 +1,4 @@
-const FACEBOOK_APP_ID = 1109094990263570;
+const FACEBOOK_APP_ID = process.env.REACT_APP_FACEBOOK_APP_ID;
 
 export default function initFacebookSDK() {
   return new Promise((resolve) => {
