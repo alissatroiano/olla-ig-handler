@@ -13,6 +13,9 @@ const options = {
   cert: fs.readFileSync("certificate.pem"),
 };
 
+// Start the http server
+const server = http.createServer(options, app);
+
 // Body parser middleware should be applied to the express app
 app.use(bodyParser.json());
 
@@ -21,30 +24,35 @@ app.get("/webhooks", (req, res) => {
   const mode = req.query["hub.mode"];
   const challenge = req.query["hub.challenge"];
   const verifyToken = req.query["hub.verify_token"];
-  const expectedVerifyToken = "eUbOvwVG3FCE8BcW";
-  const payload = req.body;
-  if (mode === "subscribe" && verifyToken === expectedVerifyToken) {
-    // Respond with the hub.challenge value
+
+  // Check if the mode is "subscribe" and verify the token
+  if (mode === "subscribe" && verifyToken === '') {
+    // Respond with the challenge parameter
     res.status(200).send(challenge);
-  } if  (payload === 'comments') {
-    res.status(200).send("Webhook received! Should include some comment data");
-    console.log("Received webhook event:", payload);
   } else {
+    // Verification failed
     res.status(403).send("Verification failed");
   }
 });
 
+// Endpoint to handle event notifications
 app.post("/webhooks", (req, res) => {
-  const payload = req.body;
-  
-  console.log("Received webhook event:", payload);
-  // Send a response to confirm receipt of the webhook event
-  res.status(200).send("Webhook received! Should include some comment data");
+  // Log the received payload
+  console.log("Received webhook payload:", req.body);
+
+  // Save the payload data to a file
+  fs.writeFile("webhook_payload.json", JSON.stringify(req.body, null, 2), (err) => {
+    if (err) {
+      console.error("Error saving payload data to file:", err);
+    } else {
+      console.log("Payload data saved to webhook_payload.json");
+    }
+  });
+  res.status(200).send("Webhook received successfully");
 });
 
-// Start the http server
-const server = http.createServer(options, app);
 
+// Start the server
 server.listen(PORT, async () => {
   console.log(`Server running at http://localhost:${PORT}`);
 

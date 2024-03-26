@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comments Data</title>
+  <style>
+    #comments-container {
+        height: 50vh;
+        background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <h1>Comments Data</h1>
+  <div id="comments-container"></div>
+
+  <script>
+    // Make a GET request to fetch comments data from the server
+    fetch('/webhooks')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        // Render the comments data in the browser
+        const commentsContainer = document.getElementById('comments-container');
+        const formattedData = JSON.stringify(data, null, 2); // Convert JSON to formatted string
+        commentsContainer.innerText = formattedData; // Display formatted data as text
+      })
+      .catch(error => {
+        console.error('Error fetching comments data:', error);
+      });
+  </script>
+</body>
+</html>
