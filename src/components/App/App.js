@@ -15,13 +15,10 @@ function App() {
   const [, setFacebookPages] = useState([]);
   const [, setInstagramAccountId] = useState("");
   const [, setMediaList] = useState([]);
-  // eslint-disable-next-line
-  const [comment, commentId] = useState([]);
+  const [comment, setComment] = useState("");
   const [reply, setReply] = useState("");
-  const [commentMsg, setComment] = useState("");
-  // eslint-disable-next-line
-  const [comments, setComments] = useState([]);
-  // eslint-disable-next-line
+  const [commentMsg, setCommentMsg] = useState("");
+  const [repliedCommentIds, setRepliedCommentIds] = useState([]);
   const [accessToken, setAccessToken] = useState("");
 
   const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
@@ -40,7 +37,6 @@ function App() {
         }
       }
     );
-    // eslint-disable-next-line
   }, []);
 
   const fetchUserPages = useCallback(
@@ -99,11 +95,11 @@ function App() {
         if (response.data && response.data.length > 0) {
           const comment = response.data[0];
           setComment(comment.text);
-          console.log("Comment:", comment);
-          const commentId = comment.id;
-          const text = comment.text;
-          console.log("Sending comment to server:", text);
-          await sendCommentToServer(commentId, text);
+          setCommentMsg(comment.text);
+          if (!repliedCommentIds.includes(comment.id)) {
+            await sendCommentToServer(comment.id, comment.text);
+            setRepliedCommentIds([...repliedCommentIds, comment.id]);
+          }
         }
       }
     );
@@ -111,13 +107,10 @@ function App() {
 
   const sendCommentToServer = async (commentId, comment) => {
     try {
-      const response = await axios.post(
-        "https://olla-onboard.onrender.com/reply",
-        {
-          commentId: commentId,
-          comment: comment,
-        }
-      );
+      const response = await axios.post("https://olla-onboard.onrender.com/reply", {
+        commentId: commentId,
+        comment: comment,
+      });
       console.log("Predictions:", response);
       const replyMessage = response.data.reply;
       setReply(replyMessage);
@@ -157,7 +150,7 @@ function App() {
       },
       {
         scope:
-          "instagram_basic,pages_show_list, instagram_manage_comments, instagram_manage_insights,pages_read_engagement, pages_manage_metadata",
+          "pages_show_list, instagram_manage_comments, pages_read_engagement, pages_manage_metadata",
       }
     );
   };
@@ -223,11 +216,11 @@ function App() {
                 </div>
               </div>
               <div className="row d-flex justify-content-center">
-                <div className="comment col-12 col-sm-6">
-                  {" "}
+                {commentMsg && ( // Display the commentMsg if available
+               <div className="comment col-12 col-sm-6">
                   <strong>Comment:</strong> {commentMsg}
-                </div>{" "}
-                {/* Display the comment */}
+                </div>
+                )}
                 {reply && ( // Display the reply if available
                   <div className="reply col-12 col-sm-6">
                     <strong>Reply:</strong> {reply}
