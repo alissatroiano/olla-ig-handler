@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../Logo/Logo";
 import NavbarNav from "../Navbar/Navbar";
 import axios from "axios";
-const cors = require("cors");
 
 library.add(fab);
 
@@ -16,11 +15,15 @@ function App() {
   const [, setFacebookPages] = useState([]);
   const [, setInstagramAccountId] = useState("");
   const [, setMediaList] = useState([]);
-  const [comment, setComment] = useState("");
+  // eslint-disable-next-line
+  const [comment, commentId] = useState([]);
   const [reply, setReply] = useState("");
-  const [commentIdentifier, setCommentIdentifier] = useState("");
+  const [commentMsg, setComment] = useState("");
+  // eslint-disable-next-line
+  const [comments, setComments] = useState([]);
+  // eslint-disable-next-line
   const [accessToken, setAccessToken] = useState("");
-  // const commentIdRef = useRef(null);
+
   const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
     window.FB.api(
       `/${pageId}`,
@@ -37,6 +40,7 @@ function App() {
         }
       }
     );
+    // eslint-disable-next-line
   }, []);
 
   const fetchUserPages = useCallback(
@@ -93,27 +97,25 @@ function App() {
       { access_token: accessToken },
       async (response) => {
         if (response.data && response.data.length > 0) {
-          const mostRecentComment = response.data[0];
-          setComment(mostRecentComment.text);
-          setCommentIdentifier(mostRecentComment.id); // Update comment identifier
-          // Send the comment to the server and await reply
-          await sendCommentToServer(
-            mostRecentComment.id,
-            mostRecentComment.text
-          );
+          const comment = response.data[0];
+          setComment(comment.text);
+          console.log("Comment:", comment);
+          const commentId = comment.id;
+          const text = comment.text;
+          console.log("Sending comment to server:", text);
+          await sendCommentToServer(commentId, text);
         }
       }
     );
   };
 
-  // Function to send comment to server
-  const sendCommentToServer = async (commentId, commentText) => {
+  const sendCommentToServer = async (commentId, comment) => {
     try {
       const response = await axios.post(
-        "https://https://olla-onboard.onrender.com/reply",
+        "https://olla-onboard.onrender.com/reply",
         {
           commentId: commentId,
-          comment: commentText,
+          comment: comment,
         }
       );
       console.log("Predictions:", response);
@@ -150,19 +152,22 @@ function App() {
       (response) => {
         if (response.status === "connected") {
           setFacebookUserAccessToken(response.authResponse.accessToken);
-          setAccessToken(response.authResponse.accessToken);
           fetchUserPages(response.authResponse.accessToken);
         }
       },
       {
         scope:
-          "pages_show_list, pages_read_engagement, instagram_manage_comments, business_management, pages_manage_metadata",
+          "instagram_basic,pages_show_list, instagram_manage_comments, instagram_manage_insights,pages_read_engagement, pages_manage_metadata",
       }
     );
   };
 
   const logOutOfFB = () => {
-    window.FB.logout(() => {});
+    window.FB.logout(() => {
+      setFacebookUserAccessToken("");
+      setFacebookPages([]);
+      setInstagramAccountId("");
+    });
   };
 
   return (
@@ -217,22 +222,17 @@ function App() {
                   )}
                 </div>
               </div>
-              <div className="d-flex row">
-                <div className="col-12 col-sm-6 text-center text-sm-end">
-                  <h3 className="heading-comments">
-                    Comments from your latest post:
-                  </h3>
-                </div>
-                <div className="col-12 col-sm-6 text-center text-sm-start">
-                  <div className="comment">
-                    <div>{comment}</div> {/* Display the comment */}
-                    {reply && ( // Display the reply if available
-                      <div className="reply">
-                        <strong>Reply:</strong> {reply}
-                      </div>
-                    )}
+              <div className="row d-flex justify-content-center">
+                <div className="comment col-12 col-sm-6">
+                  {" "}
+                  <strong>Comment:</strong> {commentMsg}
+                </div>{" "}
+                {/* Display the comment */}
+                {reply && ( // Display the reply if available
+                  <div className="reply col-12 col-sm-6">
+                    <strong>Reply:</strong> {reply}
                   </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

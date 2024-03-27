@@ -1,12 +1,11 @@
 // PrivacyPolicy.js
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
-import { Link } from "react-router-dom";
 import "./PrivacyPolicy.css";
 
 function PrivacyPolicy() {
   const [show, setShow] = useState(true);
-  const [fullscreen, setFullscreen] = useState(true);
+  const [fullscreen, ] = useState(true);
 
   const handleClose = () => setShow(false);
 
