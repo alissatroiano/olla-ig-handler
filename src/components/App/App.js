@@ -5,7 +5,9 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../Logo/Logo";
+import NavbarNav from "../Navbar/Navbar";
 import axios from "axios";
+const cors = require("cors");
 
 library.add(fab);
 
@@ -15,12 +17,10 @@ function App() {
   const [, setInstagramAccountId] = useState("");
   const [, setMediaList] = useState([]);
   const [comment, setComment] = useState("");
-  const [commentIdentifier, setCommentIdentifier] = useState("");
   const [reply, setReply] = useState("");
-  // eslint-disable-next-line
-  const [comments, setComments] = useState([]);
+  const [commentIdentifier, setCommentIdentifier] = useState("");
   const [accessToken, setAccessToken] = useState("");
-
+  // const commentIdRef = useRef(null);
   const fetchInstagramBusinessAccount = useCallback((pageId, accessToken) => {
     window.FB.api(
       `/${pageId}`,
@@ -97,19 +97,25 @@ function App() {
           setComment(mostRecentComment.text);
           setCommentIdentifier(mostRecentComment.id); // Update comment identifier
           // Send the comment to the server and await reply
-          await sendCommentToServer(mostRecentComment.id, mostRecentComment.text);
+          await sendCommentToServer(
+            mostRecentComment.id,
+            mostRecentComment.text
+          );
         }
       }
     );
   };
-  
+
   // Function to send comment to server
   const sendCommentToServer = async (commentId, commentText) => {
     try {
-      const response = await axios.post("https://olla-onboard.onrender.com/reply", {
-        commentId: commentId,
-        comment: commentText,
-      });
+      const response = await axios.post(
+        "https://https://olla-onboard.onrender.com/reply",
+        {
+          commentId: commentId,
+          comment: commentText,
+        }
+      );
       console.log("Predictions:", response);
       const replyMessage = response.data.reply;
       setReply(replyMessage);
@@ -144,26 +150,24 @@ function App() {
       (response) => {
         if (response.status === "connected") {
           setFacebookUserAccessToken(response.authResponse.accessToken);
+          setAccessToken(response.authResponse.accessToken);
           fetchUserPages(response.authResponse.accessToken);
         }
       },
       {
         scope:
-          "pages_show_list, pages_read_engagement, instagram_basic, instagram_manage_comments, business_management, pages_manage_metadata",
+          "pages_show_list, pages_read_engagement, instagram_manage_comments, business_management, pages_manage_metadata",
       }
     );
   };
 
   const logOutOfFB = () => {
-    window.FB.logout(() => {
-      setFacebookUserAccessToken("");
-      setFacebookPages([]);
-      setInstagramAccountId("");
-    });
+    window.FB.logout(() => {});
   };
 
   return (
     <div className="App">
+      <NavbarNav />
       <div className="container-fluid">
         <div className="row text-center d-flex justify-content-center align-items-center my-0 mx-auto">
           <div className="appWrapper py-5">
