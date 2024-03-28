@@ -6,7 +6,7 @@ const ngrok = require("@ngrok/ngrok");
 const dotenv = require("dotenv");
 dotenv.config({ path: ".env" });
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 const options = {
   key: fs.readFileSync("private-key.pem"),

@@ -5274,6 +5274,14 @@ express-rate-limit@^7.2.0:
   resolved "https://registry.npmjs.org/express-rate-limit/-/express-rate-limit-7.2.0.tgz"
   integrity sha512-T7nul1t4TNyfZMJ7pKRKkdeVJWa2CqB8NA1P8BwYaoDI5QSBZARv5oMS43J7b7I5P+4asjVXjb7ONuwDKucahg==
 
+express-x-hub@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/express-x-hub/-/express-x-hub-1.0.4.tgz"
+  integrity sha512-FWxecZA5TgarOzVq+4aVIQNr7jzJ/WXh7pwduOVp/Be8YFBVClE3Bty8IcZmxLaUxCY+JpnRAeyromqZG3zolg==
+  dependencies:
+    raw-body "^2.1.4"
+    type-is "^1.6.9"
+
 express@^4.17.3, express@^4.18.3, "express@4 || 5 || ^5.0.0-beta.1":
   version "4.18.3"
   resolved "https://registry.npmjs.org/express/-/express-4.18.3.tgz"
@@ -9283,7 +9291,7 @@ range-parser@1.2.0:
   resolved "https://registry.npmjs.org/range-parser/-/range-parser-1.2.0.tgz"
   integrity sha512-kA5WQoNVo4t9lNx2kQNFCxKeBl5IbbSNBl1M/tLkw9WCn+hxNBAW5Qh8gdhs63CJnhjJ2zQWFoqPJP2sK1AV5A==
 
-raw-body@2.5.2:
+raw-body@^2.1.4, raw-body@2.5.2:
   version "2.5.2"
   resolved "https://registry.npmjs.org/raw-body/-/raw-body-2.5.2.tgz"
   integrity sha512-8zGqypfENjCIqGhgXToC8aB2r7YrBX+AQAfIPs/Mlk+BtPTztOvTS01NRW/3Eh60J+a48lt8qsCzirQ6loCVfA==
@@ -10883,7 +10891,7 @@ type-fest@^2.13.0:
   resolved "https://registry.npmjs.org/type-fest/-/type-fest-2.19.0.tgz"
   integrity sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==
 
-type-is@~1.6.18:
+type-is@^1.6.9, type-is@~1.6.18:
   version "1.6.18"
   resolved "https://registry.npmjs.org/type-is/-/type-is-1.6.18.tgz"
   integrity sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==

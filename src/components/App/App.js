@@ -107,7 +107,7 @@ function App() {
 
   const sendCommentToServer = async (commentId, comment) => {
     try {
-      const response = await axios.post("https://olla-onboard.onrender.com/reply", {
+      const response = await axios.post("http://localhost:8080/reply", {
         commentId: commentId,
         comment: comment,
       });
@@ -150,7 +150,7 @@ function App() {
       },
       {
         scope:
-          "pages_show_list, instagram_manage_comments, pages_read_engagement, pages_manage_metadata",
+          "instagram_basic, pages_show_list, instagram_manage_comments, pages_read_engagement, pages_manage_metadata",
       }
     );
   };
